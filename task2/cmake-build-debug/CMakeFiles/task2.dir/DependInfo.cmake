@@ -8,7 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/juliannevella/Documents/cps2004-assignment/task2/main.cpp" "/Users/juliannevella/Documents/cps2004-assignment/task2/cmake-build-debug/CMakeFiles/task2.dir/main.cpp.o"
+  "/Users/juliannevella/Documents/cps2004-assignment/task2/Board.cpp" "/Users/juliannevella/Documents/cps2004-assignment/task2/cmake-build-debug/CMakeFiles/task2.dir/Board.cpp.o"
+  "/Users/juliannevella/Documents/cps2004-assignment/task2/Launcher.cpp" "/Users/juliannevella/Documents/cps2004-assignment/task2/cmake-build-debug/CMakeFiles/task2.dir/Launcher.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

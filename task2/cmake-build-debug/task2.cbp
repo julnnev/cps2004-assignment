@@ -80,7 +80,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/juliannevella/Documents/cps2004-assignment/task2/main.cpp">
+		<Unit filename="/Users/juliannevella/Documents/cps2004-assignment/task2/Board.cpp">
+			<Option target="task2"/>
+		</Unit>
+		<Unit filename="/Users/juliannevella/Documents/cps2004-assignment/task2/Board.h">
+			<Option target="task2"/>
+		</Unit>
+		<Unit filename="/Users/juliannevella/Documents/cps2004-assignment/task2/Launcher.cpp">
 			<Option target="task2"/>
 		</Unit>
 		<Unit filename="/Users/juliannevella/Documents/cps2004-assignment/task2/CMakeLists.txt">

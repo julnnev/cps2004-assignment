@@ -66,30 +66,45 @@ include CMakeFiles/task2.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/task2.dir/flags.make
 
-CMakeFiles/task2.dir/main.cpp.o: CMakeFiles/task2.dir/flags.make
-CMakeFiles/task2.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/juliannevella/Documents/cps2004-assignment/task2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/task2.dir/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task2.dir/main.cpp.o -c /Users/juliannevella/Documents/cps2004-assignment/task2/main.cpp
+CMakeFiles/task2.dir/Launcher.cpp.o: CMakeFiles/task2.dir/flags.make
+CMakeFiles/task2.dir/Launcher.cpp.o: ../Launcher.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/juliannevella/Documents/cps2004-assignment/task2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/task2.dir/Launcher.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task2.dir/Launcher.cpp.o -c /Users/juliannevella/Documents/cps2004-assignment/task2/Launcher.cpp
 
-CMakeFiles/task2.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/task2.dir/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/juliannevella/Documents/cps2004-assignment/task2/main.cpp > CMakeFiles/task2.dir/main.cpp.i
+CMakeFiles/task2.dir/Launcher.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/task2.dir/Launcher.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/juliannevella/Documents/cps2004-assignment/task2/Launcher.cpp > CMakeFiles/task2.dir/Launcher.cpp.i
 
-CMakeFiles/task2.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/task2.dir/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/juliannevella/Documents/cps2004-assignment/task2/main.cpp -o CMakeFiles/task2.dir/main.cpp.s
+CMakeFiles/task2.dir/Launcher.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/task2.dir/Launcher.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/juliannevella/Documents/cps2004-assignment/task2/Launcher.cpp -o CMakeFiles/task2.dir/Launcher.cpp.s
+
+CMakeFiles/task2.dir/Board.cpp.o: CMakeFiles/task2.dir/flags.make
+CMakeFiles/task2.dir/Board.cpp.o: ../Board.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/juliannevella/Documents/cps2004-assignment/task2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/task2.dir/Board.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task2.dir/Board.cpp.o -c /Users/juliannevella/Documents/cps2004-assignment/task2/Board.cpp
+
+CMakeFiles/task2.dir/Board.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/task2.dir/Board.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/juliannevella/Documents/cps2004-assignment/task2/Board.cpp > CMakeFiles/task2.dir/Board.cpp.i
+
+CMakeFiles/task2.dir/Board.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/task2.dir/Board.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/juliannevella/Documents/cps2004-assignment/task2/Board.cpp -o CMakeFiles/task2.dir/Board.cpp.s
 
 # Object files for target task2
 task2_OBJECTS = \
-"CMakeFiles/task2.dir/main.cpp.o"
+"CMakeFiles/task2.dir/Launcher.cpp.o" \
+"CMakeFiles/task2.dir/Board.cpp.o"
 
 # External object files for target task2
 task2_EXTERNAL_OBJECTS =
 
-task2: CMakeFiles/task2.dir/main.cpp.o
+task2: CMakeFiles/task2.dir/Launcher.cpp.o
+task2: CMakeFiles/task2.dir/Board.cpp.o
 task2: CMakeFiles/task2.dir/build.make
 task2: CMakeFiles/task2.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/juliannevella/Documents/cps2004-assignment/task2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable task2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/juliannevella/Documents/cps2004-assignment/task2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable task2"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/task2.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

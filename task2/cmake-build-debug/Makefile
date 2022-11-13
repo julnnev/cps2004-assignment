@@ -129,29 +129,53 @@ task2/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/task2.dir/build.make CMakeFiles/task2.dir/build
 .PHONY : task2/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
+Board.o: Board.cpp.o
+.PHONY : Board.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/task2.dir/build.make CMakeFiles/task2.dir/main.cpp.o
-.PHONY : main.cpp.o
+Board.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task2.dir/build.make CMakeFiles/task2.dir/Board.cpp.o
+.PHONY : Board.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+Board.i: Board.cpp.i
+.PHONY : Board.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/task2.dir/build.make CMakeFiles/task2.dir/main.cpp.i
-.PHONY : main.cpp.i
+Board.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task2.dir/build.make CMakeFiles/task2.dir/Board.cpp.i
+.PHONY : Board.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+Board.s: Board.cpp.s
+.PHONY : Board.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/task2.dir/build.make CMakeFiles/task2.dir/main.cpp.s
-.PHONY : main.cpp.s
+Board.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task2.dir/build.make CMakeFiles/task2.dir/Board.cpp.s
+.PHONY : Board.cpp.s
+
+Launcher.o: Launcher.cpp.o
+.PHONY : Launcher.o
+
+# target to build an object file
+Launcher.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task2.dir/build.make CMakeFiles/task2.dir/Launcher.cpp.o
+.PHONY : Launcher.cpp.o
+
+Launcher.i: Launcher.cpp.i
+.PHONY : Launcher.i
+
+# target to preprocess a source file
+Launcher.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task2.dir/build.make CMakeFiles/task2.dir/Launcher.cpp.i
+.PHONY : Launcher.cpp.i
+
+Launcher.s: Launcher.cpp.s
+.PHONY : Launcher.s
+
+# target to generate assembly for a file
+Launcher.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task2.dir/build.make CMakeFiles/task2.dir/Launcher.cpp.s
+.PHONY : Launcher.cpp.s
 
 # Help Target
 help:
@@ -162,9 +186,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... task2"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... Board.o"
+	@echo "... Board.i"
+	@echo "... Board.s"
+	@echo "... Launcher.o"
+	@echo "... Launcher.i"
+	@echo "... Launcher.s"
 .PHONY : help
 
 

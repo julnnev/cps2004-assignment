@@ -3,4 +3,4 @@ project(task2)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(task2 main.cpp)
+add_executable(task2 Launcher.cpp Board.cpp Board.h)

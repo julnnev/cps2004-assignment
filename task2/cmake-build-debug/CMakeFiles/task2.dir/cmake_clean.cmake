@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/task2.dir/main.cpp.o"
+  "CMakeFiles/task2.dir/Board.cpp.o"
+  "CMakeFiles/task2.dir/Launcher.cpp.o"
   "task2"
   "task2.pdb"
 )
