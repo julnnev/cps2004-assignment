@@ -5,8 +5,10 @@ CMakeFiles/task2.dir/Board.cpp.o: \
  ../Board.cpp \
  ../Board.h
 CMakeFiles/task2.dir/Game.cpp.o: \
+ ../Board.h \
  ../Game.cpp \
  ../Game.h
 CMakeFiles/task2.dir/Launcher.cpp.o: \
  ../Board.h \
+ ../Game.h \
  ../Launcher.cpp

@@ -19,7 +19,7 @@ public:
     // method to check if a cell is a mine
     bool isMine(int i, int j);
     //method to count number of mines
-    int countMines(int i, int j);
+    int mineCount(int i, int j);
 
     // attributes of the class
      char gameBoard[GRID_ROWS][GRID_COLUMNS];

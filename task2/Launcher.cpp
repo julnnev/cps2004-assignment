@@ -1,9 +1,11 @@
 #include <iostream>
 #include "Board.h"
+#include "Game.h"
+using namespace std;
 int main() {
-    std::cout << "Welcome to Minesweeper!" << std::endl;
-    Board b;
-    b.initBoard();
-    b.printBoard();
+    Game g;
+    g.playGame();
+   // b.initBoard();
+   // b.printBoard();
     return 0;
 }

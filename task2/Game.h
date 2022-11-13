@@ -4,16 +4,22 @@
 
 #ifndef TASK2_GAME_H
 #define TASK2_GAME_H
+#include <iostream>
+#include "Board.h"
+using namespace std;
 
 
-class Game {
+class Game{
 public:
-    //method to print board with user options which refers to Board object to print out
-        // top header and side header to display numbers
-        static char userBoard[16][16];
+    Game();
+    //play minesweeper method
+    void playGame();
+    void setUserBoard();
+    void printUserBoard();
+    bool validateInput(int crd);
+    void displayWelcomeMessage();
 
-
-
+    char userBoard[GRID_ROWS][GRID_COLUMNS];
 };
 
 
