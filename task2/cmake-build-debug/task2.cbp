@@ -86,6 +86,12 @@
 		<Unit filename="/Users/juliannevella/Documents/cps2004-assignment/task2/Board.h">
 			<Option target="task2"/>
 		</Unit>
+		<Unit filename="/Users/juliannevella/Documents/cps2004-assignment/task2/Game.cpp">
+			<Option target="task2"/>
+		</Unit>
+		<Unit filename="/Users/juliannevella/Documents/cps2004-assignment/task2/Game.h">
+			<Option target="task2"/>
+		</Unit>
 		<Unit filename="/Users/juliannevella/Documents/cps2004-assignment/task2/Launcher.cpp">
 			<Option target="task2"/>
 		</Unit>
