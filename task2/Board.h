@@ -7,18 +7,16 @@
 
 
 class Board {
-    char grid[16][16];
-
+public:
     // constructor initialises the randomly allocated board
-
-    // method to check if a cell is a mine
-
+    Board();
     // method to print the board
-
-    // method to display mine counts
-
-
-
+    void printBoard();
+    // method to check if a cell is a mine
+    bool isMine(int i, int j);
+    static char grid[16][16];
+    int countMines(int i, int j);
+    // attributes of the class
 };
 
 
