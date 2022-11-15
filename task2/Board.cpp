@@ -57,18 +57,47 @@ bool Board::isMine(int i, int j) {
 }
 
 int Board::mineCount(int i, int j) {
+    int count=0;
+    if(isMine(i-1,j)){
+        count++;
+    }
+    if(isMine(i+1,j)){
+        count++;
+    }
+    if(isMine(i,j-1)){
+        count++;
+    }
+    if(isMine(i,j+1)){
+        count++;
+    }
+    if(isMine(i-1,j+1)){
+        count++;
+    }
+    if(isMine(i+1,j+1)){
+        count++;
+    }
+    if(isMine(i-1,j-1)){
+        count++;
+    }
+
+    if(isMine(i+1,j-1)){
+        count++;
+    }
+
     /*
     Cell-->Current Cell (row, col)
     N -->  North        (row-1, col)
     S -->  South        (row+1, col)
     E -->  East         (row, col+1)
-    W -->  West            (row, col-1)
+    W -->  West         (row, col-1)
+
     N.E--> North-East   (row-1, col+1)
     N.W--> North-West   (row-1, col-1)
     S.E--> South-East   (row+1, col+1)
     S.W--> South-West   (row+1, col-1)
      */
 
-    return 0;
+    //cater for edge cases?
+    return count;
 }
 
