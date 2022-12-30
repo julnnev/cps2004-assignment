@@ -15,7 +15,8 @@ public:
     //initialising random locations
     void initBoard();
     // method to print the board
-    void printBoard();
+    void printFullBoard();
+    void displayBoard(int x, int y);
     // method to check if a cell is a mine
     bool isMine(int i, int j);
     //method to count number of mines
@@ -24,6 +25,7 @@ public:
     // attributes of the class
      char gameBoard[GRID_ROWS][GRID_COLUMNS];
      int mineLocations[TOTAL_MINES][2];
+     bool clearedCells[GRID_ROWS][GRID_COLUMNS];
 };
 
 
