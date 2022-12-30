@@ -13,10 +13,10 @@ class Game{
 public:
     Game();
     //play minesweeper method
-    void playGame();
+    int* enterCoords();
     void setUserBoard();
     void printUserBoard();
-    bool validateInput(int crd);
+    bool validateInputRange(int crd);
     void displayWelcomeMessage();
 
     char userBoard[GRID_ROWS][GRID_COLUMNS];
