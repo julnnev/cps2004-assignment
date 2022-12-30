@@ -8,31 +8,42 @@ Game::Game() {
 
 }
 
-void Game::playGame() {
+int* Game::enterCoords() {
     int x, y;
-    displayWelcomeMessage();
-    setUserBoard();
-    printUserBoard();
-
-    //while loop required until game over!
+    int coords[2];
+    bool validXType, validYType;
 
     //Accepting x and y co-ordinates of the cell to clear!
-    cout << "Enter x co-ordinate" << endl;
+    cout << "Enter x co-ordinate: " << endl;
     do {
         cin >> x;
-    } while (!validateInput(x));
+        validXType=true;
+        if(cin.fail()){
+            cout << "Enter an integer value!" << endl;
+            cin.clear();
+            cin.ignore(80,'\n');
+            validXType=false;
+        }
+    } while (!validateInputRange(x) || !validXType);
 
-    cout << "Enter y co-ordinate" << endl;
+    cout << "Enter y co-ordinate: " << endl;
     do {
         cin >> y;
-    } while (!validateInput(y));
+        validYType=true;
+        if(cin.fail()){
+            cout << "Enter an integer value!" << endl;
+            cin.clear();
+            cin.ignore(80,'\n');
+            validYType=false;
+        }
+    } while (!validateInputRange(y) || !validYType);
 
-
-
-    //... continue with game logic
+    coords[0]=x;
+    coords[1]=y;
+    return coords;
 }
 
-void Game::printUserBoard() {
+/*void Game::printUserBoard() {
     int i, j;
 
     for (i = 0; i < 16; i++)
@@ -54,9 +65,9 @@ void Game::setUserBoard() {
             userBoard[i][j] = '-';
         }
     }
-}
+}*/
 
-bool Game::validateInput(int crd) {
+bool Game::validateInputRange(int crd) {
     if (crd < 0 || crd > GRID_ROWS-1) {
         cout << "Enter a co-ordinate between 0 and 15\n";
         return false;
