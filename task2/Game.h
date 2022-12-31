@@ -12,14 +12,9 @@ using namespace std;
 class Game{
 public:
     Game();
-    //play minesweeper method
     int* enterCoords();
-    void setUserBoard();
-    void printUserBoard();
     bool validateInputRange(int crd);
     void displayWelcomeMessage();
-
-    char userBoard[GRID_ROWS][GRID_COLUMNS];
 };
 
 

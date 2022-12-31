@@ -13,7 +13,7 @@ int* Game::enterCoords() {
     int coords[2];
     bool validXType, validYType;
 
-    //Accepting x and y co-ordinates of the cell to clear!
+    //Accepting x and y co-ordinates of the cell to clear
     cout << "Enter x co-ordinate: " << endl;
     do {
         cin >> x;
@@ -42,30 +42,6 @@ int* Game::enterCoords() {
     coords[1]=y;
     return coords;
 }
-
-/*void Game::printUserBoard() {
-    int i, j;
-
-    for (i = 0; i < 16; i++)
-        cout << "\t" << i;
-
-    cout << "\n";
-
-    for (i = 0; i < 16; i++) {
-        cout << i;
-        for (j = 0; j < 16; j++)
-            cout << "\t" << userBoard[i][j];
-        cout << "\n";
-    }
-}
-
-void Game::setUserBoard() {
-    for (int i = 0; i < 16; i++) {
-        for (int j = 0; j < 16; j++) {
-            userBoard[i][j] = '-';
-        }
-    }
-}*/
 
 bool Game::validateInputRange(int crd) {
     if (crd < 0 || crd > GRID_ROWS-1) {
