@@ -21,6 +21,7 @@ public:
     bool isMine(int i, int j);
     //method to count number of mines
     int mineCount(int i, int j);
+    void checkAllCleared();
 
     // attributes of the class
      char gameBoard[GRID_ROWS][GRID_COLUMNS];

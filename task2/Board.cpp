@@ -65,6 +65,8 @@ void Board::printFullBoard() {
 }
 
 void Board::displayBoard(int x, int y) {
+    int i, j;
+
     //catering for edge cases
     if (!isMine(x, y)) {
         if (x == 0 && y == 0) {
@@ -117,11 +119,6 @@ void Board::displayBoard(int x, int y) {
         }
     }
 
-
-
-
-    //fix method to display proper counts and keep on updating the board not just rehide after next input
-    int i, j;
     for (i = 0; i < 16; i++)
         cout << "\t" << i;
 
@@ -193,3 +190,16 @@ int Board::mineCount(int i, int j) {
     return count;
 }
 
+void Board::checkAllCleared(){
+    int clearedCount=0;
+    for (bool x: this->clearedCells){
+        if(this->clearedCells[x]) {
+            clearedCount++;
+        }
+    }
+
+    if(clearedCount==256){
+        cout << "Congratulations, you have won Minesweeper!" << endl;
+    }
+
+}
