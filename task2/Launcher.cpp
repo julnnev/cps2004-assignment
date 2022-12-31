@@ -10,7 +10,7 @@ int main() {
 
    g.displayWelcomeMessage();
    b.initBoard();
-   b.printFullBoard(); //for testing purposes
+   // b.printFullBoard();for testing purposes
 
    cout << "\n";
 
@@ -29,9 +29,9 @@ int main() {
            b.printFullBoard();
        }
 
-       // winning game output!
-
    }while(!b.isMine(x,y));
+
+    b.checkAllCleared();
 
     return 0;
 }
