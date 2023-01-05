@@ -35,7 +35,18 @@ public class Game {
 
 
                         //resource earning
-
+                        System.out.println("Current Resources\nWood: "+map.villages[i][j].resources.wood+"\nStone: "+map.villages[i][j].resources.stone+"\nMeat: "+map.villages[i][j].resources.meat);
+                        for(ResourceGeneratorBuilding r:map.villages[i][j].resourceBuildings){
+                            if(r.generates.equals("Meat")){
+                                map.villages[i][j].resources.addMeat(r.amountGenerated.meat);
+                            }
+                            if(r.generates.equals("Stone")){
+                                map.villages[i][j].resources.addStone(r.amountGenerated.stone);
+                            }
+                            if(r.generates.equals("Wood")){
+                                map.villages[i][j].resources.addWood(r.amountGenerated.wood);
+                            }
+                        }
 
                         // player actions
                         choice = playerActions();
