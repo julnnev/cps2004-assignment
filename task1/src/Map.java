@@ -40,8 +40,9 @@ public class Map {
 
     }
 
-    public void destroyVillageFromMap(Village v){
-        villages[v.x][v.y] = null;
+    public void destroyVillageFromMap(int x, int y){
+        villages[x][y] = null;
+
     }
 
     public void printMap(){
