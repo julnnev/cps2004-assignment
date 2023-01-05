@@ -12,6 +12,12 @@ public class TroopGeneratorBuilding {
         this.troopHealth = 10; // upon building start creating troops with troopHealth = 10
     }
 
+    public void upgradeTroopGeneratorBuilding(){
+        level++;
+        troopAttack+=10;
+        troopHealth+=10;
+    }
+
 
 
 }
