@@ -22,16 +22,122 @@ public class Game {
            System.out.println(p.name+"\n"+p.playerNo);
         }*/
 
+        System.out.println(playerCount);
         map.printMap();
+        int choice = 0;
+        String playerSurrendered=" ";
+        int x = 0, y = 0;
+        Player tempPL = null;
+        // game loop
+        do {
+            for (Player p : playerList) { // loop so that players can take turns
+                System.out.println("Player " + p.name + " it's your turn!");
+                // friendly troop arrival
+
+                // enemy troop arrival
+
+                //resource earning
 
 
+                // player actions
+                choice = playerActions();
+                if (choice == -1) {
+                    continue;
+                }
+                switch (choice) {
+                    case 1: // build/upgrade buildings
+                        break;
+                    case 2: //train troops
+                        break;
+                    case 3: //attack another village with an army
+                        break;
+                    case 4: //surrender - village destroyed and player eliminated
+                        // get coordinates and player object to delete, no modification allowed in loop
+                        for (int i = 0; i < map.mapDimension; i++) {
+                            for (int j = 0; j < map.mapDimension; j++) {
+                                if (map.villages[i][j] != null && p.equals(map.villages[i][j].owner)) {
+                                    playerSurrendered = p.name;
+                                    x = i;
+                                    y = j;
+                                    tempPL = p;
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        System.out.println("Something went wrong...");
+                        break;
+
+
+                }
+
+                if(choice==4){
+                    break; //break from for loop so that player can surrender
+                }
+
+            }
+            if (choice == 4) {
+                if(playerCount!=1){
+                    System.out.println("Player " + playerSurrendered + " you have surrendered!");
+                    map.destroyVillageFromMap(x, y);
+                    playerList.remove(tempPL);
+                    playerCount--;
+                }else{
+                    System.out.println("Player " + playerSurrendered + " you have surrendered!");
+                    map.destroyVillageFromMap(x, y);
+                    playerList.remove(tempPL);
+                    break;
+                }
+            }
+            map.printMap();
+
+
+            // update marching armies' locations according to marching speed and target.
+        } while (playerCount != 1 || playerCount!=0); //win condition
+    }
+
+    public void printActions() {
+        System.out.println("\t--- Player Actions ---");
+        System.out.println("1. Build/Upgrade Buildings\n2. Train Troops\n3. Attack another village with an army\n4. Surrender\n5. Pass your turn");
+    }
+
+
+    public int playerActions() {
+        Scanner s = new Scanner(System.in);
+        boolean repeat = true;
+        int choice = 0;
+
+        printActions();
+
+        while (repeat) {
+            try {
+                System.out.println("Enter your choice");
+                choice = s.nextInt();
+
+                if (choice > 0 && choice < 6) {
+                    repeat = false;
+                }
+
+            } catch (InputMismatchException exception) {
+                System.out.println("Please enter a valid number from 1 to 5.");
+                s.nextLine();
+                repeat = true;
+            }
+        }
+
+        if (choice == 5) {
+            return -1;
+        } else {
+            return choice;
+        }
 
     }
 
-    public void createVillages(ArrayList<Player> playerList){
+
+    public void createVillages(ArrayList<Player> playerList) {
         Map m = Map.getInstance();
         System.out.println(playerList.size());
-        for(Player p: playerList){
+        for (Player p : playerList) {
             Village v = new Village(p);
             m.addVillageOnMap(v);
         }
