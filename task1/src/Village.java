@@ -4,8 +4,10 @@ public class Village {
     int x,y; //co-ordinates
     int health;
     Player owner;
-    ArrayList<Troop> ownedTroops;
-    ArrayList<Troop> stationedTroops; //troops at the village at any time
+    ArrayList<ResourceGeneratorBuilding> resourceBuildings = new ArrayList<>();
+    ArrayList<TroopGeneratorBuilding> troopBuildings= new ArrayList<>();
+    ArrayList<Troop> ownedTroops= new ArrayList<>();
+    ArrayList<Troop> stationedTroops= new ArrayList<>(); //troops at the village at any time
     Resource resources;
 
     // constructor
