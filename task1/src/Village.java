@@ -35,8 +35,41 @@ public class Village {
         this.y = y;
     }
 
+    public  ArrayList<Troop> getAvailableTroops(){ // to add as an attribute instead of returning the list??
+        ArrayList<Troop> availableTroops = new ArrayList<>(this.ownedTroops);
+        availableTroops.removeAll(this.awayTroops);
+        return availableTroops;
+    }
+
+    public int[] getAvailableTroopTypes(ArrayList<Troop> availableTroops){
+        int cavalryAvailable=0, archersAvailable=0, groundAvailable=0;
+        int[] troopTypes = {cavalryAvailable,archersAvailable, groundAvailable};
+
+        // get counts of troop types in availableTroops and check if enough troops of each type are available
+        for(Troop troop: availableTroops){
+            if(troop instanceof CavalryTroop){ // current troop object is of subclass archerytroop...
+                cavalryAvailable++;
+            }
+            if(troop instanceof ArcherTroop){ // current troop object is of subclass archerytroop...
+                archersAvailable++;
+            }
+            if(troop instanceof GroundTroop){ // current troop object is of subclass archerytroop...
+                groundAvailable++;
+            }
+        }
+        return troopTypes;
+    }
+
+    public boolean checkSufficientTroopTypes(int cavalryRequest, int archerRequest, int groundRequest, int[] troopTypes) {
+        if (groundRequest > troopTypes[2] || cavalryRequest > troopTypes[0] || archerRequest > troopTypes[1]) {
+            System.out.println("Insufficient troops available!");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public void displayResourceBuildings() {
-        //display resource generator buildings
         int index = 0;
         for (ResourceGeneratorBuilding r : this.resourceBuildings) {
             System.out.println(index + "\nLevel: " + r.level + " \nGenerates: " + r.generates);
