@@ -1,4 +1,4 @@
-public class TroopGeneratorBuilding {
+public abstract class TroopGeneratorBuilding {
     int level;
     Resource cost;
 
@@ -11,13 +11,11 @@ public class TroopGeneratorBuilding {
         this.troopAttack = 10;  // upon building start creating troops with troopAttack = 10
         this.troopHealth = 10; // upon building start creating troops with troopHealth = 10
     }
-
     public void upgradeTroopGeneratorBuilding(){
         level++;
         troopAttack+=10;
         troopHealth+=10;
     }
 
-
-
+    public abstract void train(int i, int j);
 }
