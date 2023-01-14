@@ -62,7 +62,6 @@ public class Game {
                         }
                         switch (choice) {
                             case 1: // build/upgrade buildings
-                                // resource generator buildings
                                 System.out.println("1. Build Resource Generator Buildings\n2. Build Troop Generating Buildings\n3. Upgrade Resource Generator Buildings\n4. Upgrade Troop Generating Buildings\n");
                                 int select = getIndex(5, false);
                                 switch (select) {
@@ -108,7 +107,6 @@ public class Game {
                                         break;
                                     case 2: //build troop gen
                                         System.out.println("Time to Build Troop Generator Buildings!\n");
-                                        // then build
                                         option = getBuildingType(false);
                                         switch (option) {
                                             case 1: //meat
@@ -247,13 +245,11 @@ public class Game {
                             case 2: //train troops
                                 System.out.println("1. Train Cavalry Troops\n2. Train Archers\n3. Train Ground Troops");
                                 int option = getIndex(4, false);
-                                Resource compareR;
-                                switch (option) {
+                                switch (option) { // CHECK FOR BUILDINGS BEFORE !!!
                                     case 1://train cavalry
-                                        compareR = new Resource(0, 0, 10);
                                         for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
-                                            if (t.cost.equals(compareR)) {
-                                                CavalryGenerator cavalryGen = (CavalryGenerator) t;
+                                            if(t instanceof CavalryGenerator) {
+                                                CavalryGenerator cavalryGen = (CavalryGenerator)t;
                                                 cavalryGen.train(i, j);
                                             }
                                         }
@@ -262,22 +258,21 @@ public class Game {
                                         }*/
                                         break;
                                     case 2: //train archers
-                                        compareR = new Resource(0, 10, 0);
                                         for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
-                                            if (t.cost.equals(compareR)) {
-                                                ArcherGenerator archerGen = (ArcherGenerator) t;
+                                            if (t instanceof ArcherGenerator) {
+                                                ArcherGenerator archerGen = (ArcherGenerator)t;
                                                 archerGen.train(i, j);
                                             }
                                         }
                                         break;
                                     case 3://train ground troops
-                                        compareR = new Resource(10, 0, 0);
                                         for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
-                                            if (t.cost.equals(compareR)) {
-                                                GroundGenerator groundGen = (GroundGenerator) t;
+                                            if (t instanceof GroundGenerator) {
+                                                GroundGenerator groundGen = (GroundGenerator)t;
                                                 groundGen.train(i, j);
                                             }
                                         }
+                                        System.out.println(map.villages[i][j].ownedTroops.size());
                                         break;
                                     default:
                                         System.out.println("Uh oh, something went wrong!");
@@ -286,11 +281,29 @@ public class Game {
                                 break;
                             case 3: //attack another village with an army
                                 try{
-                                if ((map.villages[i][j].ownedTroops.size() != 0) || (map.villages[i][j].ownedTroops.size()!=0 &&(map.villages[i][j].ownedTroops.size()) == (map.villages[i][j].awayTroops.size()))) {
+                                if ((map.villages[i][j].ownedTroops.size() != 0)) {
+                                    // || (map.villages[i][j].ownedTroops.size()!=0 &&(map.villages[i][j].ownedTroops.size()) == (map.villages[i][j].awayTroops.size()))
+
+
                                     // LOGIC
-                                    // ask for how much of each troop to be added
+                                    // ask for how much of each troop to be added - ADD ERROR HANDLING!
+                                    Scanner input = new Scanner(System.in);
+                                    System.out.println("How many Archer Troops would you like to add in this army?");
+                                    int archerRequested = input.nextInt();
+                                    System.out.println("How many Cavalry Troops would you like to add in this army?");
+                                    int cavalryRequested = input.nextInt();
+                                    System.out.println("How many Ground Troops would you like to add in this army?");
+                                    int groundRequested = input.nextInt();
+
+
                                     // check if enough troops of each type are available
-                                    // add respective troops to arrayList
+                                    ArrayList<Troop> availableTroops = map.villages[i][j].getAvailableTroops();
+                                    int[] availableTroopTypes = map.villages[i][j].getAvailableTroopTypes(availableTroops);
+                                    if(!map.villages[i][j].checkSufficientTroopTypes(cavalryRequested, archerRequested, groundRequested, availableTroopTypes)){  //check if enough troops of each type are available
+                                       continue;
+                                    }else{
+                                        // add troops of each amount and type required to arrayList
+                                    }
 
                                     // enter village co-ordinates to attack
                                     // create Army a = new Army(...)
