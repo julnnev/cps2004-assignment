@@ -6,7 +6,7 @@ public class MeatGenerator extends ResourceGeneratorBuilding{
         this.generates="Meat";
     }
 
-    public void upgradeMeatGen(){
+    public void upgradeResources(){
         this.level++;
         this.amountGenerated.meat+=10;
     }

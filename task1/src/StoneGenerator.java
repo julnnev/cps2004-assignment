@@ -7,7 +7,7 @@ public class StoneGenerator extends ResourceGeneratorBuilding{
         this.generates="Stone";
     }
 
-    public void upgradeStoneGen(){
+    public void upgradeResources(){
         this.level++;
         this.amountGenerated.stone+=10;
     }

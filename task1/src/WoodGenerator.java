@@ -6,7 +6,7 @@ public class WoodGenerator extends ResourceGeneratorBuilding{
         this.generates="Wood";
     }
 
-    public void upgradeWoodGen(){
+    public void upgradeResources(){
         this.level++;
         this.amountGenerated.wood+=10;
     }

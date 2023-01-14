@@ -1,4 +1,4 @@
-public class ResourceGeneratorBuilding {
+public abstract class ResourceGeneratorBuilding {
     Resource cost;
     int level;
     Resource amountGenerated; //varies depending on level of upgrade
@@ -14,7 +14,7 @@ public class ResourceGeneratorBuilding {
         this.level = 0;
     }
 
-    // public void upgradeResourceGeneratorBuilding ...
+    abstract public void upgradeResources();
         //increase level, increase amount generated each round
 
 
