@@ -2,10 +2,10 @@ public class Troop {
     int health;
     int attack;
     Resource carryingCapacity;
-    int marchingSpeed;
+    double marchingSpeed;
     Resource cost;
 
-    public Troop(int health, int attack, Resource carryingCapacity, int marchingSpeed, Resource cost) {
+    public Troop(int health, int attack, Resource carryingCapacity, double marchingSpeed, Resource cost) {
         this.health = health;
         this.attack = attack;
         this.carryingCapacity = carryingCapacity;
@@ -13,7 +13,7 @@ public class Troop {
         this.cost = cost;
     }
 
-    public Troop(int health, int attack, Resource carryingCapacity, int marchingSpeed) {
+    public Troop(int health, int attack, Resource carryingCapacity, double marchingSpeed) {
         this.health = health;
         this.attack = attack;
         this.carryingCapacity = carryingCapacity;
@@ -24,7 +24,7 @@ public class Troop {
 
     }
 
-    int getMarchingSpeed(){
+    double getMarchingSpeed(){
         return marchingSpeed;
     }
 }

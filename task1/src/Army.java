@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 public class Army {
     ArrayList<Troop> troops;
     int totalAttack;
-    int marchingSpeed;
+    double marchingSpeed;
     int[] currentLocation;
     int[] target;
     boolean arrivedAtTarget;
@@ -17,8 +17,7 @@ public class Army {
             this.totalAttack += t.attack;  //total of all troops in troop
         }
 
-
-        Troop lowestMarchingTroop = troops.stream().min(Comparator.comparingInt(Troop::getMarchingSpeed)).orElseThrow(NoSuchElementException::new); // slowest of all troops
+        Troop lowestMarchingTroop = troops.stream().min(Comparator.comparingDouble(Troop::getMarchingSpeed)).orElseThrow(NoSuchElementException::new); // slowest of all troops
         this.marchingSpeed = lowestMarchingTroop.marchingSpeed;
 
         this.currentLocation = currentLocation;
