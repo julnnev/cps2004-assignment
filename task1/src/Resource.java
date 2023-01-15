@@ -38,4 +38,8 @@ public class Resource {
     public void deductWood(int wood){
         this.wood -= wood;
     }
+
+    public String toString(){
+        return "Current Resources\nWood: " + this.wood + "\nStone: " + this.stone + "\nMeat: " + this.meat;
+    }
 }
