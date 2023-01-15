@@ -9,23 +9,27 @@ public class Game {
     static int playerCount = 0;
 
     public void run() {
-        // ADD: polymorphism - method overriding
+        int choice;
         ArrayList<Player> playerList;
+        int[] playerCountByType;
+
         Map map = Map.getInstance();
 
-        int[] playerCountByType;
         welcomeMessage();
+
         playerCountByType = getDesiredPlayerCount(); // [0] - in person players, [1] - AI Players, [2] total number of desired players
 
         playerList = createPlayers(playerCountByType);
 
         createVillages(playerList); // on creating players and their associated village, add village to the map
 
-        System.out.println(playerCount);
-        map.printMap();
-        int choice;
+        /*System.out.println(playerCount); test purposes*/
+
+
         // game loop
         do {
+            // show army stats in each round for each village
+            map.printMap();
             for (int i = 0; i < map.mapDimension; i++) {
                 for (int j = 0; j < map.mapDimension; j++) {
                     if (map.villages[i][j] != null) {
@@ -36,10 +40,23 @@ public class Game {
                         System.out.println("Player " + map.villages[i][j].owner.name + " it's your turn!");
 
                         // friendly troop arrival
+                        for (Army army : map.villages[i][j].activeArmies) { // an army is a list of troops
+                            for (Troop t : army.troops) { // for each troop in the army
+                                if (army.arrivedAtBase) {
+                                    //adding resources to village resources
+                                    map.villages[i][j].resources.wood += t.carryingCapacity.wood;
+                                    map.villages[i][j].resources.stone += t.carryingCapacity.stone;
+                                    map.villages[i][j].resources.meat += t.carryingCapacity.meat;
+                                    map.villages[i][j].awayTroops.remove(t);
+                                    map.villages[i][j].activeArmies.remove(army);
+                                }
 
+                            }
+
+                        }
 
                         // enemy troop arrival
-
+                            // resolve combat conflict
 
                         //resource earning - wait one round to get resources/upgrades, until buildings are built/upgraded
                         System.out.println("Current Resources\nWood: " + map.villages[i][j].resources.wood + "\nStone: " + map.villages[i][j].resources.stone + "\nMeat: " + map.villages[i][j].resources.meat);
@@ -248,8 +265,8 @@ public class Game {
                                 switch (option) { // CHECK FOR BUILDINGS BEFORE !!!
                                     case 1://train cavalry
                                         for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
-                                            if(t instanceof CavalryGenerator) {
-                                                CavalryGenerator cavalryGen = (CavalryGenerator)t;
+                                            if (t instanceof CavalryGenerator) {
+                                                CavalryGenerator cavalryGen = (CavalryGenerator) t;
                                                 cavalryGen.train(i, j);
                                             }
                                         }
@@ -260,7 +277,7 @@ public class Game {
                                     case 2: //train archers
                                         for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
                                             if (t instanceof ArcherGenerator) {
-                                                ArcherGenerator archerGen = (ArcherGenerator)t;
+                                                ArcherGenerator archerGen = (ArcherGenerator) t;
                                                 archerGen.train(i, j);
                                             }
                                         }
@@ -268,7 +285,7 @@ public class Game {
                                     case 3://train ground troops
                                         for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
                                             if (t instanceof GroundGenerator) {
-                                                GroundGenerator groundGen = (GroundGenerator)t;
+                                                GroundGenerator groundGen = (GroundGenerator) t;
                                                 groundGen.train(i, j);
                                             }
                                         }
@@ -280,39 +297,73 @@ public class Game {
                                 }
                                 break;
                             case 3: //attack another village with an army
-                                try{
-                                if ((map.villages[i][j].ownedTroops.size() != 0)) {
-                                    // || (map.villages[i][j].ownedTroops.size()!=0 &&(map.villages[i][j].ownedTroops.size()) == (map.villages[i][j].awayTroops.size()))
+                                try {
+                                    if ((map.villages[i][j].ownedTroops.size() != 0)) {
+                                        // LOGIC
+                                        // ask for how much of each troop to be added - ADD ERROR HANDLING!
+                                        Scanner input = new Scanner(System.in);
+                                        System.out.println("How many Archer Troops would you like to add in this army?");
+                                        int archerRequested = input.nextInt();
+                                        System.out.println("How many Cavalry Troops would you like to add in this army?");
+                                        int cavalryRequested = input.nextInt();
+                                        System.out.println("How many Ground Troops would you like to add in this army?");
+                                        int groundRequested = input.nextInt();
 
 
-                                    // LOGIC
-                                    // ask for how much of each troop to be added - ADD ERROR HANDLING!
-                                    Scanner input = new Scanner(System.in);
-                                    System.out.println("How many Archer Troops would you like to add in this army?");
-                                    int archerRequested = input.nextInt();
-                                    System.out.println("How many Cavalry Troops would you like to add in this army?");
-                                    int cavalryRequested = input.nextInt();
-                                    System.out.println("How many Ground Troops would you like to add in this army?");
-                                    int groundRequested = input.nextInt();
+                                        // check if enough troops of each type are available
+                                        ArrayList<Troop> availableTroops = map.villages[i][j].getAvailableTroops();
+                                        int[] availableTroopTypes = map.villages[i][j].getAvailableTroopTypes(availableTroops);
+                                        ArrayList<Troop> selectedTroops;
+                                        if (!map.villages[i][j].checkSufficientTroopTypes(cavalryRequested, archerRequested, groundRequested, availableTroopTypes)) {  //check if enough troops of each type are available
+                                            continue;
+                                        } else {
+                                            // add troops of each amount and type required to arrayList
+                                            selectedTroops = new ArrayList<>();
+                                            int archerCount = 0, cavalryCount = 0, groundCount = 0;
+                                            for (Troop t : availableTroops) {
+                                                if (cavalryCount < cavalryRequested) {
+                                                    if (t instanceof CavalryTroop) {
+                                                        cavalryCount++;
+                                                        selectedTroops.add(t);
+                                                    }
+                                                }
+                                                if (archerCount < archerRequested) {
+                                                    if (t instanceof ArcherTroop) {
+                                                        archerCount++;
+                                                        selectedTroops.add(t);
+                                                    }
+                                                }
+
+                                                if (groundCount < groundRequested) {
+                                                    if (t instanceof GroundTroop) {
+                                                        groundCount++;
+                                                        selectedTroops.add(t);
+                                                    }
+                                                }
+                                            }
+
+                                        /*for (Troop t: selectedTroops){
+                                            System.out.println(t.toString());
+                                        }*/
 
 
-                                    // check if enough troops of each type are available
-                                    ArrayList<Troop> availableTroops = map.villages[i][j].getAvailableTroops();
-                                    int[] availableTroopTypes = map.villages[i][j].getAvailableTroopTypes(availableTroops);
-                                    if(!map.villages[i][j].checkSufficientTroopTypes(cavalryRequested, archerRequested, groundRequested, availableTroopTypes)){  //check if enough troops of each type are available
-                                       continue;
-                                    }else{
-                                        // add troops of each amount and type required to arrayList
+                                        }
+                                        // enter village co-ordinates to attack - check if they are valid
+                                        int[] coordinates = getCoordinatesToAttack();
+                                        int[] currentLocation = {map.villages[i][j].getX(), map.villages[i][j].getY()};
+                                        // create Army a = new Army(...) Army(ArrayList<Troop> troops, int[] currentLocation, int[] target
+                                        Army army = new Army(selectedTroops, currentLocation, coordinates);
+                                        // add created army to troops away and active armies
+                                        map.villages[i][j].activeArmies.add(army);
+                                        for (Troop t : selectedTroops) {
+                                            map.villages[i][j].awayTroops.add(t);
+                                        }
+
+
+                                    } else { //if no troops are created
+                                        throw new NoTroopsOwnedException("No troops available!\n");
                                     }
-
-                                    // enter village co-ordinates to attack
-                                    // create Army a = new Army(...)
-                                    // add created army to troops away
-
-                                } else { //if no troops are created/all are out on attack
-                                    throw new NoTroopsOwnedException("No troops available!");
-                                }
-                                }catch(NoTroopsOwnedException t){
+                                } catch (NoTroopsOwnedException t) {
                                     System.out.println(t.getMessage());
                                 }
 
@@ -333,15 +384,59 @@ public class Game {
 
 
                     }
+
                 }
 
+            }
+            // update marching armies' locations according to marching speed and target
+            for (int i = 0; i < map.mapDimension; i++) {
+                for (int j = 0; j < map.mapDimension; j++) {
+                    if (map.villages[i][j] != null)
+                        for (Army army : map.villages[i][j].activeArmies) {
+                            //updating marching speed
+                            army.currentLocation[0]+=army.marchingSpeed;
+                            army.currentLocation[1]+=army.marchingSpeed;
+                            // distance = sqrt((x2-x1)^2+(y2-y1)^2))
+                            // if()..
+                        }
 
-                // update marching armies' locations according to marching speed and target.
-
-
+                }
             }
 
+
         } while (playerCount != 1); //win condition
+    }
+
+    public int[] getCoordinatesToAttack() {
+        int attackX = 0, attackY = 0;
+        boolean repeat = false;
+        int[] coordinatesAttack = new int[2];
+        Scanner s = new Scanner(System.in);
+        Map m = Map.getInstance();
+
+        do {
+            try {
+                System.out.println("Enter x co-ordinate of village to attack: ");
+                attackX = s.nextInt();
+
+                System.out.println("Enter y co-ordinate of village to attack: ");
+                attackY = s.nextInt();
+
+                if (m.villages[attackX][attackY] != null) {
+                    repeat = false;
+                }
+
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid co-ordinate");
+                s.nextLine();
+                repeat = true;
+
+            }
+        } while (repeat);
+        coordinatesAttack[0] = attackX;
+        coordinatesAttack[1] = attackY;
+
+        return coordinatesAttack;
     }
 
     public int getIndex(int upperBound, boolean zeroIncluded) {
