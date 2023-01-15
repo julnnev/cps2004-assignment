@@ -7,7 +7,8 @@ public class Village {
     ArrayList<ResourceGeneratorBuilding> resourceBuildings = new ArrayList<>();
     ArrayList<TroopGeneratorBuilding> troopBuildings = new ArrayList<>();
     ArrayList<Troop> ownedTroops = new ArrayList<>();
-    ArrayList<Troop> awayTroops = new ArrayList<>(); //troops at the village at any time
+    ArrayList<Troop> awayTroops = new ArrayList<>();
+    ArrayList<Army> activeArmies = new ArrayList<>();
     Resource resources;
 
     // constructor
@@ -42,19 +43,17 @@ public class Village {
     }
 
     public int[] getAvailableTroopTypes(ArrayList<Troop> availableTroops){
-        int cavalryAvailable=0, archersAvailable=0, groundAvailable=0;
-        int[] troopTypes = {cavalryAvailable,archersAvailable, groundAvailable};
-
+        int[] troopTypes = new int[3];
         // get counts of troop types in availableTroops and check if enough troops of each type are available
         for(Troop troop: availableTroops){
-            if(troop instanceof CavalryTroop){ // current troop object is of subclass archerytroop...
-                cavalryAvailable++;
+            if(troop instanceof CavalryTroop){
+                troopTypes[0]++;
             }
-            if(troop instanceof ArcherTroop){ // current troop object is of subclass archerytroop...
-                archersAvailable++;
+            if(troop instanceof ArcherTroop){
+                troopTypes[1]++;
             }
-            if(troop instanceof GroundTroop){ // current troop object is of subclass archerytroop...
-                groundAvailable++;
+            if(troop instanceof GroundTroop){
+                troopTypes[2]++;
             }
         }
         return troopTypes;
