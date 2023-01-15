@@ -63,7 +63,7 @@ public class Game {
                             for (int l = 0; l < map.mapDimension; l++) {
                                 if (map.villages[k][l] != null) {
                                     for (Army army : map.villages[k][l].activeArmies) {
-                                        if (army.arrivedAtTarget && army.target[0]==k && army.target[1]==l) {
+                                        if (army.arrivedAtTarget && army.target[0]==i && army.target[1]==j) {
                                             incomingAttack = army.totalAttack;
 
                                             // get available troops at the village getAvailableTroops(), sum their attack for each troop in the list in a variable called defendingAttack
@@ -75,7 +75,6 @@ public class Game {
 
 
                                             //If the attacker's army has 10 attack and the defending army has 20 attack -> Both armies lose 10 troops and defender wins.
-
                                             if (incomingAttack < defendingAttack) {
                                                 difference = defendingAttack - incomingAttack;
                                                 // both armies loose troops = difference ADD LOGIC
@@ -83,8 +82,7 @@ public class Game {
                                             }
 
 
-//                                            If the attacker's army has 10 attack and the defending army has 5 attack -> Both armies lose 5 troops and attacker wins.
-
+                                            //If the attacker's army has 10 attack and the defending army has 5 attack -> Both armies lose 5 troops and attacker wins.
                                             if (incomingAttack > defendingAttack) {
                                                 difference = defendingAttack - incomingAttack;
                                                 // both armies loose troops = difference ADD LOGIC
@@ -92,7 +90,7 @@ public class Game {
                                             }
 
 
-//                                          If both armies have 10 attack -> Both armies lose 10 troops and defender wins.
+                                            //If both armies have 10 attack -> Both armies lose 10 troops and defender wins.
 
                                             if (incomingAttack == defendingAttack) {
                                                 // both armies loose troops = incomingAttack
@@ -116,18 +114,8 @@ public class Game {
 
                         //resource earning - wait one round to get resources/upgrades, until buildings are built/upgraded
                         // can be placed in generateResources method in Village.
-                        System.out.println("Current Resources\nWood: " + map.villages[i][j].resources.wood + "\nStone: " + map.villages[i][j].resources.stone + "\nMeat: " + map.villages[i][j].resources.meat);
-                        for (ResourceGeneratorBuilding r : map.villages[i][j].resourceBuildings) {
-                            if (r.generates.equals("Meat")) {
-                                map.villages[i][j].resources.addMeat(r.amountGenerated.meat);
-                            }
-                            if (r.generates.equals("Stone")) {
-                                map.villages[i][j].resources.addStone(r.amountGenerated.stone);
-                            }
-                            if (r.generates.equals("Wood")) {
-                                map.villages[i][j].resources.addWood(r.amountGenerated.wood);
-                            }
-                        }
+                        System.out.println(map.villages[i][j].resources.toString()); // replaces System.out.println("Current Resources\nWood: " + map.villages[i][j].resources.wood + "\nStone: " + map.villages[i][j].resources.stone + "\nMeat: " + map.villages[i][j].resources.meat);
+                        map.villages[i][j].upgradeResources();
 
                         // player actions
                         choice = playerActions();
