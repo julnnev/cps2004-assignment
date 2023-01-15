@@ -106,4 +106,18 @@ public class Village {
         }
     }
 
+    public void upgradeResources(){
+        for (ResourceGeneratorBuilding r : this.resourceBuildings) {
+            if (r.generates.equals("Meat")) {
+                this.resources.addMeat(r.amountGenerated.meat);
+            }
+            if (r.generates.equals("Stone")) {
+                this.resources.addStone(r.amountGenerated.stone);
+            }
+            if (r.generates.equals("Wood")) {
+                this.resources.addWood(r.amountGenerated.wood);
+            }
+        }
+    }
+
 }
