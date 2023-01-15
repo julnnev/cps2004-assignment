@@ -9,6 +9,7 @@ public class Army {
     int[] currentLocation;
     int[] target;
     boolean arrivedAtTarget;
+    boolean arrivedAtBase;
 
     public Army(ArrayList<Troop> troops, int[] currentLocation, int[] target) {
         this.troops = troops;
@@ -23,5 +24,6 @@ public class Army {
         this.currentLocation = currentLocation;
         this.target = target;
         this.arrivedAtTarget = false;
+        this.arrivedAtBase = false;
     }
 }
