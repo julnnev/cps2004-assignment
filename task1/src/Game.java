@@ -56,9 +56,67 @@ public class Game {
                         }
 
                         // enemy troop arrival
-                            // resolve combat conflict
+                        // resolve combat conflict for armies with target[0] = i and target[1] = j
+                        int incomingAttack, defendingAttack = 0, difference;
+                        ArrayList<Troop> stationedTroops;
+                        for (int k = 0; k < map.mapDimension; k++) {
+                            for (int l = 0; l < map.mapDimension; l++) {
+                                if (map.villages[k][l] != null) {
+                                    for (Army army : map.villages[k][l].activeArmies) {
+                                        if (army.arrivedAtTarget) { // add condition to check if at required village
+                                            // incomingAttack =  army.totalAttack
+                                            incomingAttack = army.totalAttack;
+
+                                            // get available troops at the village getAvailableTroops(), sum their attack for each troop in the list in a variable called defendingAttack
+                                            stationedTroops = map.villages[i][j].getAvailableTroops();
+                                            for (Troop troop : stationedTroops) {
+                                                defendingAttack += troop.attack;
+                                            }
+                                            //
+
+
+                                            //If the attacker's army has 10 attack and the defending army has 20 attack -> Both armies lose 10 troops and defender wins.
+
+                                            if (incomingAttack < defendingAttack) {
+                                                difference = defendingAttack - incomingAttack;
+                                                // both armies loose troops = difference ADD LOGIC
+                                                army.successfulAttack = false;
+                                            }
+
+
+//                                            If the attacker's army has 10 attack and the defending army has 5 attack -> Both armies lose 5 troops and attacker wins.
+
+                                            if (incomingAttack > defendingAttack) {
+                                                difference = defendingAttack - incomingAttack;
+                                                // both armies loose troops = difference ADD LOGIC
+                                                army.successfulAttack = true;
+                                            }
+
+
+//                                          If both armies have 10 attack -> Both armies lose 10 troops and defender wins.
+
+                                            if (incomingAttack == defendingAttack) {
+                                                // both armies loose troops = incomingAttack
+                                                army.successfulAttack = false;
+                                            }
+
+
+                                            // if (army.success)
+                                            // village.health =- army.totalAttack
+                                            // deduct resources equal to the sum of each troops carrying capacity in the army -
+                                            // start marching back ... (SEE CODE SEGMENT AT END OF GAME LOOP)
+
+                                            //
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+
 
                         //resource earning - wait one round to get resources/upgrades, until buildings are built/upgraded
+                        // can be placed in generateResources method in Village.
                         System.out.println("Current Resources\nWood: " + map.villages[i][j].resources.wood + "\nStone: " + map.villages[i][j].resources.stone + "\nMeat: " + map.villages[i][j].resources.meat);
                         for (ResourceGeneratorBuilding r : map.villages[i][j].resourceBuildings) {
                             if (r.generates.equals("Meat")) {
@@ -342,16 +400,12 @@ public class Game {
                                                 }
                                             }
 
-                                        /*for (Troop t: selectedTroops){
-                                            System.out.println(t.toString());
-                                        }*/
-
 
                                         }
                                         // enter village co-ordinates to attack - check if they are valid
                                         int[] coordinates = getCoordinatesToAttack();
-                                        int[] currentLocation = {map.villages[i][j].getX(), map.villages[i][j].getY()};
-                                        // create Army a = new Army(...) Army(ArrayList<Troop> troops, int[] currentLocation, int[] target
+                                        double[] currentLocation = {map.villages[i][j].getX(), map.villages[i][j].getY()};
+                                        // create Army
                                         Army army = new Army(selectedTroops, currentLocation, coordinates);
                                         // add created army to troops away and active armies
                                         map.villages[i][j].activeArmies.add(army);
@@ -391,18 +445,63 @@ public class Game {
             // update marching armies' locations according to marching speed and target
             for (int i = 0; i < map.mapDimension; i++) {
                 for (int j = 0; j < map.mapDimension; j++) {
-                    if (map.villages[i][j] != null)
+                    if (map.villages[i][j] != null) {
                         for (Army army : map.villages[i][j].activeArmies) {
-                            //updating marching speed
-                            army.currentLocation[0]+=army.marchingSpeed;
-                            army.currentLocation[1]+=army.marchingSpeed;
-                            // distance = sqrt((x2-x1)^2+(y2-y1)^2))
-                            // if()..
-                        }
+                            //updating marching speed and determining arrivedAtTarget for armies en route
 
+                            /*if(!army.arrivedAtTarget) {    // incorrect logic ! - distance does not always converge!
+                                army.currentLocation[0] += army.marchingSpeed;
+                                army.currentLocation[1] += army.marchingSpeed;
+                                double differenceX = Math.pow((army.currentLocation[0] - army.target[0]), 2);
+                                double differenceY = Math.pow((army.currentLocation[1] - army.target[1]), 2);
+                                double distance = Math.sqrt(differenceX + differenceY);
+                                if (distance <= army.marchingSpeed) { // army arrived at target
+                                    army.arrivedAtTarget = true;
+                                }
+                            }*/
+
+
+                            if (!army.arrivedAtTarget) {
+                                if (army.target[0] > army.currentLocation[0]) {
+                                    army.currentLocation[0] += army.marchingSpeed;
+                                }
+                                if (army.target[0] < army.currentLocation[0]) {
+                                    army.currentLocation[0] -= army.marchingSpeed;
+                                }
+                                if ((Math.abs(army.target[0] - army.currentLocation[0])) < army.marchingSpeed) {
+                                    army.arrivedX = true;
+                                }
+
+                                if (army.arrivedX) {
+                                    if (army.target[1] > army.currentLocation[1]) {
+                                        army.currentLocation[1] += army.marchingSpeed;
+                                    }
+                                    if (army.target[1] < army.currentLocation[1]) {
+                                        army.currentLocation[1] -= army.marchingSpeed;
+                                    }
+
+                                    if ((Math.abs(army.target[1] - army.currentLocation[1])) < army.marchingSpeed) {
+                                        army.arrivedY = true;
+                                    }
+                                }
+
+                                if (army.arrivedY && army.arrivedX) {
+                                    army.arrivedAtTarget = true;
+                                }
+
+                            }
+
+
+                            // ALSO determine arrivedAtBase - same logic as above ..................
+                            if (army.arrivedAtTarget && army.successfulAttack) {
+                                // start marching back
+                            }
+                            //
+                            //
+                        }
+                    }
                 }
             }
-
 
         } while (playerCount != 1); //win condition
     }
