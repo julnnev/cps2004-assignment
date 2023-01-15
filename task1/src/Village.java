@@ -106,7 +106,7 @@ public class Village {
         }
     }
 
-    public void upgradeResources(){
+    public void updateResources(){
         for (ResourceGeneratorBuilding r : this.resourceBuildings) {
             if (r.generates.equals("Meat")) {
                 this.resources.addMeat(r.amountGenerated.meat);
