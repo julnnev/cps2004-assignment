@@ -25,7 +25,6 @@ public class Game {
 
         /*System.out.println(playerCount); test purposes*/
 
-
         // game loop
         do {
             // show army stats in each round for each village
@@ -42,7 +41,7 @@ public class Game {
                         // friendly troop arrival
                         for (Army army : map.villages[i][j].activeArmies) { // an army is a list of troops
                             for (Troop t : army.troops) { // for each troop in the army
-                                if (!army.arrivedAtBase) {
+                                if (army.arrivedAtBase) {
                                     //adding resources to village resources
                                     map.villages[i][j].resources.addWood(t.carryingCapacity.wood);
                                     map.villages[i][j].resources.addStone(t.carryingCapacity.stone);
@@ -64,8 +63,7 @@ public class Game {
                             for (int l = 0; l < map.mapDimension; l++) {
                                 if (map.villages[k][l] != null) {
                                     for (Army army : map.villages[k][l].activeArmies) {
-                                        if (army.arrivedAtTarget) { // add condition to check if at required village
-                                            // incomingAttack =  army.totalAttack
+                                        if (army.arrivedAtTarget && army.target[0]==k && army.target[1]==l) {
                                             incomingAttack = army.totalAttack;
 
                                             // get available troops at the village getAvailableTroops(), sum their attack for each troop in the list in a variable called defendingAttack
