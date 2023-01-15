@@ -42,11 +42,12 @@ public class Game {
                         // friendly troop arrival
                         for (Army army : map.villages[i][j].activeArmies) { // an army is a list of troops
                             for (Troop t : army.troops) { // for each troop in the army
-                                if (army.arrivedAtBase) {
+                                if (!army.arrivedAtBase) {
                                     //adding resources to village resources
-                                    map.villages[i][j].resources.wood += t.carryingCapacity.wood;
-                                    map.villages[i][j].resources.stone += t.carryingCapacity.stone;
-                                    map.villages[i][j].resources.meat += t.carryingCapacity.meat;
+                                    map.villages[i][j].resources.addWood(t.carryingCapacity.wood);
+                                    map.villages[i][j].resources.addStone(t.carryingCapacity.stone);
+                                    map.villages[i][j].resources.addMeat(t.carryingCapacity.meat);
+
                                     map.villages[i][j].awayTroops.remove(t);
                                     map.villages[i][j].activeArmies.remove(army);
                                 }
