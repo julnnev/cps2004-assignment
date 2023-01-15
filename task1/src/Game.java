@@ -23,8 +23,6 @@ public class Game {
 
         createVillages(playerList); // on creating players and their associated village, add village to the map
 
-        /*System.out.println(playerCount); test purposes*/
-
         // game loop
         do {
             // show army stats in each round for each village
@@ -315,9 +313,6 @@ public class Game {
                                                 cavalryGen.train(i, j);
                                             }
                                         }
-                                        /* testing purposes - for(TroopGeneratorBuilding t: map.villages[i][j].troopBuildings) {
-                                            System.out.println(t.toString());
-                                        }*/
                                         break;
                                     case 2: //train archers
                                         for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
@@ -435,19 +430,6 @@ public class Game {
                     if (map.villages[i][j] != null) {
                         for (Army army : map.villages[i][j].activeArmies) {
                             //updating marching speed and determining arrivedAtTarget for armies en route
-
-                            /*if(!army.arrivedAtTarget) {    // incorrect logic ! - distance does not always converge!
-                                army.currentLocation[0] += army.marchingSpeed;
-                                army.currentLocation[1] += army.marchingSpeed;
-                                double differenceX = Math.pow((army.currentLocation[0] - army.target[0]), 2);
-                                double differenceY = Math.pow((army.currentLocation[1] - army.target[1]), 2);
-                                double distance = Math.sqrt(differenceX + differenceY);
-                                if (distance <= army.marchingSpeed) { // army arrived at target
-                                    army.arrivedAtTarget = true;
-                                }
-                            }*/
-
-
                             if (!army.arrivedAtTarget) {
                                 if (army.target[0] > army.currentLocation[0]) {
                                     army.currentLocation[0] += army.marchingSpeed;
@@ -634,8 +616,6 @@ public class Game {
             System.out.println("Enter name for Player " + (i + 1));
             name = s.nextLine();
             Player p = new Player(name, false);
-            //System.out.println(p.name);  test purposes
-            //System.out.println(p.playerNo); test purposes
             players.add(p);
 
         }
@@ -644,8 +624,6 @@ public class Game {
             for (int i = 0; i < counts[1]; i++) {
                 name = "AI" + (i + 1);
                 Player p = new Player(name, true);
-                //System.out.println(p.name); test purposes
-                // System.out.println(p.playerNo); test purposes
                 players.add(p);
 
             }
@@ -688,9 +666,7 @@ public class Game {
             }
         }
 
-        // System.out.println(inpersonPlayers); test purposes
         players[0] = inpersonPlayers;
-        // System.out.println(AIPlayers); test purposes
         players[1] = AIPlayers;
         players[2] = inpersonPlayers + AIPlayers;
 
