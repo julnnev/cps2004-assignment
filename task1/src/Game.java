@@ -183,241 +183,202 @@ public class Game {
                                 }
                             }
 
-                            if(map.villages[i][j]!=null){
-                            // resource earning - wait one round to get resources/upgrades, until buildings are built/upgraded
-                            System.out.println(map.villages[i][j].resources.toString()); // replaces System.out.println("Current Resources\nWood: " + map.villages[i][j].resources.wood + "\nStone: " + map.villages[i][j].resources.stone + "\nMeat: " + map.villages[i][j].resources.meat);
-                            map.villages[i][j].updateResources();
+                            if (map.villages[i][j] != null) {
+                                // resource earning - wait one round to get resources/upgrades, until buildings are built/upgraded
+                                System.out.println(map.villages[i][j].resources.toString()); // replaces System.out.println("Current Resources\nWood: " + map.villages[i][j].resources.wood + "\nStone: " + map.villages[i][j].resources.stone + "\nMeat: " + map.villages[i][j].resources.meat);
+                                map.villages[i][j].updateResources();
 
 
-                            // PLAYER ACTIONS
-                            choice = playerActions();
-                            if (choice == 5) {
-                                continue; // indicates pass the turn
-                            }
+                                // PLAYER ACTIONS
+                                choice = playerActions();
+                                if (choice == 5) {
+                                    continue; // indicates pass the turn
+                                }
 
-                            switch (choice) {
-                                case 1: // BUILD/UPGRADE BUILDINGS
-                                    System.out.println("1. Build Resource Generator Buildings\n2. Build Troop Generating Buildings\n3. Upgrade Resource Generator Buildings\n4. Upgrade Troop Generating Buildings\n");
-                                    int select = getIndex(5, false);
-                                    switch (select) {
-                                        case 1: //build resource gen
-                                            System.out.println("Time to build Resource Generator Buildings!");
-                                            int option = getBuildingType(true);
-                                            switch (option) {
-                                                case 1: //meat
-                                                    if (map.villages[i][j].resources.meat < 15) {
-                                                        System.out.println("Invalid funds!");
-                                                    } else {
-                                                        map.villages[i][j].resources.deductMeat(15);
-                                                        MeatGenerator m = new MeatGenerator();
-                                                        map.villages[i][j].resourceBuildings.add(m);
-                                                        System.out.println("Meat Generator has been built!");
-                                                    }
-                                                    break;
-                                                case 2: // stone
-                                                    if (map.villages[i][j].resources.stone < 15) {
-                                                        System.out.println("Invalid funds!");
-                                                    } else {
-                                                        map.villages[i][j].resources.deductStone(15);
-                                                        StoneGenerator s = new StoneGenerator();
-                                                        map.villages[i][j].resourceBuildings.add(s);
-                                                        System.out.println("Stone Generator has been built!");
-                                                    }
-                                                    break;
-                                                case 3: // wood
-                                                    if (map.villages[i][j].resources.wood < 15) {
-                                                        System.out.println("Invalid funds!");
-                                                    } else {
-                                                        map.villages[i][j].resources.deductWood(15);
-                                                        WoodGenerator w = new WoodGenerator();
-                                                        map.villages[i][j].resourceBuildings.add(w);
-                                                        System.out.println("Wood Generator has been built!");
-                                                    }
-                                                    break;
-                                                default:
-                                                    System.out.println("Uh oh, something went wrong");
-                                                    break;
+                                switch (choice) {
+                                    case 1: // BUILD/UPGRADE BUILDINGS
+                                        System.out.println("1. Build Resource Generator Buildings\n2. Build Troop Generating Buildings\n3. Upgrade Resource Generator Buildings\n4. Upgrade Troop Generating Buildings\n");
+                                        int select = getIndex(5, false);
+                                        switch (select) {
+                                            case 1: //build resource gen
+                                                System.out.println("Time to build Resource Generator Buildings!");
+                                                int option = getBuildingType(true);
+                                                switch (option) {
+                                                    case 1: //meat
+                                                        map.villages[i][j].buildMeatGenerator();
+                                                        break;
+                                                    case 2: // stone
+                                                        map.villages[i][j].buildStoneGenerator();
+                                                        break;
+                                                    case 3: // wood
+                                                        map.villages[i][j].buildWoodGenerator();
+                                                        break;
+                                                    default:
+                                                        System.out.println("Uh oh, something went wrong");
+                                                        break;
 
-                                            }
-                                            break;
-                                        case 2: //build troop gen
-                                            System.out.println("Time to Build Troop Generator Buildings!\n");
-                                            option = getBuildingType(false);
-                                            switch (option) {
-                                                case 1: //meat
-                                                    if (map.villages[i][j].resources.meat < 10) {
-                                                        System.out.println("Invalid funds!");
-                                                    } else {
-                                                        map.villages[i][j].resources.deductMeat(10);
-                                                        CavalryGenerator c = new CavalryGenerator();
-                                                        map.villages[i][j].troopBuildings.add(c);
-                                                        System.out.println("Cavalry Troop Generator has been built!");
-                                                    }
-                                                    break;
-                                                case 2: // stone
-                                                    if (map.villages[i][j].resources.stone < 10) {
-                                                        System.out.println("Invalid funds!");
-                                                    } else {
-                                                        map.villages[i][j].resources.deductStone(10);
-                                                        ArcherGenerator a = new ArcherGenerator();
-                                                        map.villages[i][j].troopBuildings.add(a);
-                                                        System.out.println("Archer Troop Generator has been built!");
-                                                    }
-                                                    break;
-                                                case 3: // wood
-                                                    if (map.villages[i][j].resources.wood < 10) {
-                                                        System.out.println("Invalid funds!");
-                                                    } else {
-                                                        map.villages[i][j].resources.deductWood(10);
-                                                        GroundGenerator g = new GroundGenerator();
-                                                        map.villages[i][j].troopBuildings.add(g);
-                                                        System.out.println("Ground Troop Generator has been built!");
-                                                    }
-                                                    break;
-                                            }
-                                            break;
-                                        case 3: //upgrade resource gen
-                                            try {
-                                                int selection;
-                                                if (map.villages[i][j].resourceBuildings.size() != 0) {
-                                                    map.villages[i][j].displayResourceBuildings();
-                                                    ResourceGeneratorBuilding toUpgrade;
-                                                    System.out.println("Time to Upgrade!");
-                                                    selection = getIndex(map.villages[i][j].resourceBuildings.size(), true);
-                                                    toUpgrade = map.villages[i][j].resourceBuildings.get(selection);
-                                                    if (toUpgrade.generates.equals("Meat")) {
-                                                        if (map.villages[i][j].resources.meat < 15) {
-                                                            System.out.println("Invalid funds!");
-                                                        } else {
-                                                            map.villages[i][j].resources.deductMeat(15);
-                                                            MeatGenerator toU = (MeatGenerator) toUpgrade;
-                                                            toU.upgradeResources();
-                                                            System.out.println("Meat Generator has been upgraded!");
-                                                        }
-                                                    }
-
-                                                    if (toUpgrade.generates.equals("Stone")) {
-                                                        if (map.villages[i][j].resources.stone < 15) {
-                                                            System.out.println("Invalid funds!");
-                                                        } else {
-                                                            map.villages[i][j].resources.deductStone(15);
-                                                            StoneGenerator toU = (StoneGenerator) toUpgrade;
-                                                            toU.upgradeResources();
-                                                            System.out.println("Stone Generator has been upgraded!");
-                                                        }
-                                                    }
-
-
-                                                    if (toUpgrade.generates.equals("Wood")) {
-                                                        if (map.villages[i][j].resources.wood < 15) {
-                                                            System.out.println("Invalid funds!");
-                                                        } else {
-                                                            map.villages[i][j].resources.deductWood(15);
-                                                            WoodGenerator toU = (WoodGenerator) toUpgrade;
-                                                            toU.upgradeResources();
-                                                            System.out.println("Wood Generator has been upgraded!");
-                                                        }
-                                                    }
-                                                } else {
-                                                    throw new NoBuildingsException("No resource generating buildings built!");
                                                 }
-                                            } catch (NoBuildingsException n) {
-                                                System.out.println(n.getMessage());
-                                            }
-                                            break;
-                                        case 4: //upgrade troop gen
-                                            try {
-                                                int selection;
-                                                if (map.villages[i][j].troopBuildings.size() != 0) {
-                                                    map.villages[i][j].displayTroopBuildings();
-                                                    System.out.println("Time to Upgrade!");
-                                                    TroopGeneratorBuilding toUpgradeTroop;
-                                                    selection = getIndex(map.villages[i][j].troopBuildings.size(), true);
-                                                    toUpgradeTroop = map.villages[i][j].troopBuildings.get(selection);
-                                                    if (toUpgradeTroop.cost.meat != 0) {
-                                                        if (map.villages[i][j].resources.meat < 10) {
-                                                            System.out.println("Invalid funds!");
-                                                        } else {
-                                                            map.villages[i][j].resources.deductMeat(10);
-                                                            toUpgradeTroop.upgradeTroopGeneratorBuilding();
-                                                            System.out.println("Cavalry Generator has been upgraded!");
-                                                        }
-                                                    }
-
-                                                    if (toUpgradeTroop.cost.stone != 0) {
-                                                        if (map.villages[i][j].resources.stone < 10) {
-                                                            System.out.println("Invalid funds!");
-                                                        } else {
-                                                            map.villages[i][j].resources.deductStone(10);
-                                                            toUpgradeTroop.upgradeTroopGeneratorBuilding();
-                                                            System.out.println("Archery Generator has been upgraded!");
-                                                        }
-                                                    }
-
-
-                                                    if (toUpgradeTroop.cost.wood != 0) {
-                                                        if (map.villages[i][j].resources.wood < 10) {
-                                                            System.out.println("Invalid funds!");
-                                                        } else {
-                                                            map.villages[i][j].resources.deductWood(10);
-                                                            toUpgradeTroop.upgradeTroopGeneratorBuilding();
-                                                            System.out.println("Ground Generator has been upgraded!");
-                                                        }
-                                                    }
-                                                } else {
-                                                    throw new NoBuildingsException("No troop generating buildings built!");
+                                                break;
+                                            case 2: //build troop gen
+                                                System.out.println("Time to Build Troop Generator Buildings!\n");
+                                                option = getBuildingType(false);
+                                                switch (option) {
+                                                    case 1: //cavalry
+                                                        map.villages[i][j].buildCavalryGenerator();
+                                                        break;
+                                                    case 2: // archers
+                                                        map.villages[i][j].buildArcherGenerator();
+                                                        break;
+                                                    case 3: // ground
+                                                        map.villages[i][j].buildGroundGenerator();
+                                                        break;
                                                 }
-                                            } catch (NoBuildingsException n) {
-                                                System.out.println(n.getMessage());
-                                            }
-                                            break;
-                                        default:
-                                            System.out.println("Uh oh, something went wrong");
-                                            break;
-                                    }
+                                                break;
+                                            case 3: //upgrade resource gen
+                                                try {
+                                                    int selection;
+                                                    if (map.villages[i][j].resourceBuildings.size() != 0) {
+                                                        map.villages[i][j].displayResourceBuildings();
+                                                        ResourceGeneratorBuilding toUpgrade;
+                                                        System.out.println("Time to Upgrade!");
+                                                        selection = getIndex(map.villages[i][j].resourceBuildings.size(), true);
+                                                        toUpgrade = map.villages[i][j].resourceBuildings.get(selection);
 
-                                    break;
-                                case 2: // TRAIN (I.E. CREATE) TROOPS
-                                    if (map.villages[i][j].resourceBuildings.size() == 0) {
-                                        System.out.println("No troop buildings available!");
+                                                        if (toUpgrade.generates.equals("Meat")) {
+                                                            if (map.villages[i][j].resources.meat < 15) {
+                                                                System.out.println("Invalid funds!");
+                                                            } else {
+                                                                map.villages[i][j].resources.deductMeat(15);
+                                                                MeatGenerator toU = (MeatGenerator) toUpgrade;
+                                                                toU.upgradeResources();
+                                                                System.out.println("Meat Generator has been upgraded!");
+                                                            }
+                                                        }
+
+                                                        if (toUpgrade.generates.equals("Stone")) {
+                                                            if (map.villages[i][j].resources.stone < 15) {
+                                                                System.out.println("Invalid funds!");
+                                                            } else {
+                                                                map.villages[i][j].resources.deductStone(15);
+                                                                StoneGenerator toU = (StoneGenerator) toUpgrade;
+                                                                toU.upgradeResources();
+                                                                System.out.println("Stone Generator has been upgraded!");
+                                                            }
+                                                        }
+
+
+                                                        if (toUpgrade.generates.equals("Wood")) {
+                                                            if (map.villages[i][j].resources.wood < 15) {
+                                                                System.out.println("Invalid funds!");
+                                                            } else {
+                                                                map.villages[i][j].resources.deductWood(15);
+                                                                WoodGenerator toU = (WoodGenerator) toUpgrade;
+                                                                toU.upgradeResources();
+                                                                System.out.println("Wood Generator has been upgraded!");
+                                                            }
+                                                        }
+                                                    } else {
+                                                        throw new NoBuildingsException("No resource generating buildings built!");
+                                                    }
+                                                } catch (NoBuildingsException n) {
+                                                    System.out.println(n.getMessage());
+                                                }
+                                                break;
+                                            case 4: //upgrade troop gen
+                                                try {
+                                                    int selection;
+                                                    if (map.villages[i][j].troopBuildings.size() != 0) {
+                                                        map.villages[i][j].displayTroopBuildings();
+                                                        System.out.println("Time to Upgrade!");
+                                                        TroopGeneratorBuilding toUpgradeTroop;
+                                                        selection = getIndex(map.villages[i][j].troopBuildings.size(), true);
+                                                        toUpgradeTroop = map.villages[i][j].troopBuildings.get(selection);
+                                                        if (toUpgradeTroop.cost.meat != 0) {
+                                                            if (map.villages[i][j].resources.meat < 10) {
+                                                                System.out.println("Invalid funds!");
+                                                            } else {
+                                                                map.villages[i][j].resources.deductMeat(10);
+                                                                toUpgradeTroop.upgradeTroopGeneratorBuilding();
+                                                                System.out.println("Cavalry Generator has been upgraded!");
+                                                            }
+                                                        }
+
+                                                        if (toUpgradeTroop.cost.stone != 0) {
+                                                            if (map.villages[i][j].resources.stone < 10) {
+                                                                System.out.println("Invalid funds!");
+                                                            } else {
+                                                                map.villages[i][j].resources.deductStone(10);
+                                                                toUpgradeTroop.upgradeTroopGeneratorBuilding();
+                                                                System.out.println("Archery Generator has been upgraded!");
+                                                            }
+                                                        }
+
+
+                                                        if (toUpgradeTroop.cost.wood != 0) {
+                                                            if (map.villages[i][j].resources.wood < 10) {
+                                                                System.out.println("Invalid funds!");
+                                                            } else {
+                                                                map.villages[i][j].resources.deductWood(10);
+                                                                toUpgradeTroop.upgradeTroopGeneratorBuilding();
+                                                                System.out.println("Ground Generator has been upgraded!");
+                                                            }
+                                                        }
+                                                    } else {
+                                                        throw new NoBuildingsException("No troop generating buildings built!");
+                                                    }
+                                                } catch (NoBuildingsException n) {
+                                                    System.out.println(n.getMessage());
+                                                }
+                                                break;
+                                            default:
+                                                System.out.println("Uh oh, something went wrong");
+                                                break;
+                                        }
+
                                         break;
-                                    }
-                                    System.out.println("1. Train Cavalry Troops\n2. Train Archers\n3. Train Ground Troops");
-                                    int option = getIndex(4, false);
-                                    switch (option) { // CHECK FOR BUILDINGS BEFORE !!!
-                                        case 1://train cavalry
-                                            for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
-                                                if (t instanceof CavalryGenerator) {
-                                                    CavalryGenerator cavalryGen = (CavalryGenerator) t;
-                                                    cavalryGen.train(i, j);
+                                    case 2: // TRAIN (I.E. CREATE) TROOPS
+                                        if (map.villages[i][j].resourceBuildings.size() == 0) {
+                                            System.out.println("No troop buildings available!");
+                                            break;
+                                        }
+                                        System.out.println("1. Train Cavalry Troops\n2. Train Archers\n3. Train Ground Troops");
+                                        int option = getIndex(4, false);
+                                        switch (option) { // CHECK FOR BUILDINGS BEFORE !!!
+                                            case 1://train cavalry
+                                                for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
+                                                    if (t instanceof CavalryGenerator) {
+                                                        CavalryGenerator cavalryGen = (CavalryGenerator) t;
+                                                        cavalryGen.train(i, j);
+                                                    }
                                                 }
-                                            }
-                                            break;
-                                        case 2: //train archers
-                                            for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
-                                                if (t instanceof ArcherGenerator) {
-                                                    ArcherGenerator archerGen = (ArcherGenerator) t;
-                                                    archerGen.train(i, j);
+                                                break;
+                                            case 2: //train archers
+                                                for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
+                                                    if (t instanceof ArcherGenerator) {
+                                                        ArcherGenerator archerGen = (ArcherGenerator) t;
+                                                        archerGen.train(i, j);
+                                                    }
                                                 }
-                                            }
-                                            break;
-                                        case 3://train ground troops
-                                            for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
-                                                if (t instanceof GroundGenerator) {
-                                                    GroundGenerator groundGen = (GroundGenerator) t;
-                                                    groundGen.train(i, j);
+                                                break;
+                                            case 3://train ground troops
+                                                for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
+                                                    if (t instanceof GroundGenerator) {
+                                                        GroundGenerator groundGen = (GroundGenerator) t;
+                                                        groundGen.train(i, j);
+                                                    }
                                                 }
+                                                System.out.println(map.villages[i][j].ownedTroops.size());
+                                                break;
+                                            default:
+                                                System.out.println("Uh oh, something went wrong!");
+                                                break;
+                                        }
+                                        break;
+                                    case 3: // ATTACK ANOTHER VILLAGE
+                                        try {
+                                            if ((map.villages[i][j].ownedTroops.size() == 0)){
+                                                throw new NoTroopsOwnedException("No troops available!\n");
                                             }
-                                            System.out.println(map.villages[i][j].ownedTroops.size());
-                                            break;
-                                        default:
-                                            System.out.println("Uh oh, something went wrong!");
-                                            break;
-                                    }
-                                    break;
-                                case 3: // ATTACK ANOTHER VILLAGE
-                                    try {
-                                        if ((map.villages[i][j].ownedTroops.size() != 0)) {
                                             Scanner input = new Scanner(System.in);
                                             System.out.println("How many Archer Troops would you like to add in this army?");
                                             int archerRequested = input.nextInt();
@@ -426,101 +387,51 @@ public class Game {
                                             System.out.println("How many Ground Troops would you like to add in this army?");
                                             int groundRequested = input.nextInt();
 
-
-                                            // check if enough troops of each type are available
-                                            map.villages[i][j].updateStationedTroops();
-                                            int[] availableTroopTypes = map.villages[i][j].getAvailableTroopTypes(map.villages[i][j].stationedTroops);
-                                            ArrayList<Troop> selectedTroops;
-                                            if (!map.villages[i][j].checkSufficientTroopTypes(cavalryRequested, archerRequested, groundRequested, availableTroopTypes)) {  //check if enough troops of each type are available
-                                                continue;
-                                            } else {
-                                                // add troops of each amount and type required to arrayList
-                                                selectedTroops = new ArrayList<>();
-                                                int archerCount = 0, cavalryCount = 0, groundCount = 0;
-                                                for (Troop t : map.villages[i][j].stationedTroops) {
-                                                    if (cavalryCount < cavalryRequested) {
-                                                        if (t instanceof CavalryTroop) {
-                                                            cavalryCount++;
-                                                            selectedTroops.add(t);
-                                                        }
-                                                    }
-                                                    if (archerCount < archerRequested) {
-                                                        if (t instanceof ArcherTroop) {
-                                                            archerCount++;
-                                                            selectedTroops.add(t);
-                                                        }
-                                                    }
-
-                                                    if (groundCount < groundRequested) {
-                                                        if (t instanceof GroundTroop) {
-                                                            groundCount++;
-                                                            selectedTroops.add(t);
-                                                        }
-                                                    }
-                                                }
-
-
-                                            }
-                                            // enter village co-ordinates to attack - check if they are valid
-                                            double[] coordinates = getCoordinatesToAttack();
-                                            double[] currentLocation = {map.villages[i][j].getX(), map.villages[i][j].getY()};
-                                            // create Army
-                                            Army army = new Army(selectedTroops, currentLocation, coordinates);
-                                            // add created army to troops away and active armies
-                                            map.villages[i][j].activeArmies.add(army);
-                                            for (Troop t : selectedTroops) {
-                                                map.villages[i][j].awayTroops.add(t);
-                                            }
-
-
-                                        } else { //if no troops are created
-                                            throw new NoTroopsOwnedException("No troops available!\n");
+                                            map.villages[i][j].attack(cavalryRequested, archerRequested, groundRequested);
+                                        } catch (NoTroopsOwnedException t) {
+                                            System.out.println(t.getMessage());
                                         }
-                                    } catch (NoTroopsOwnedException t) {
-                                        System.out.println(t.getMessage());
-                                    }
 
-                                    break;
-                                case 4: // SURRENDER - I.E. village destroyed and player eliminated
-                                    System.out.println("Player " + map.villages[i][j].owner.name + " you have surrendered!");
-                                    playerList.remove(map.villages[i][j].owner);
-                                    map.destroyVillageFromMap(i, j);
-                                    if (playerCount != 1) {
-                                        playerCount--;
-                                    }
+                                        break;
+                                    case 4: // SURRENDER - I.E. village destroyed and player eliminated
+                                        System.out.println("Player " + map.villages[i][j].owner.name + " you have surrendered!");
+                                        playerList.remove(map.villages[i][j].owner);
+                                        map.destroyVillageFromMap(i, j);
+                                        if (playerCount != 1) {
+                                            playerCount--;
+                                        }
 
-                                    break;
-                                default:
-                                    System.out.println("Something went wrong...");
-                                    break;
+                                        break;
+                                    default:
+                                        System.out.println("Something went wrong...");
+                                        break;
+                                }
+
                             }
 
 
-                        }
-
-
-                        // UPDATING MARCHING ARMIES LOCATION ACCORDING TO SPEED AND TARGET
-                        for (int q = 0; q < map.mapDimension; q++) {
-                            for (int r = 0; r < map.mapDimension; r++) {
-                                if (map.villages[i][j] != null) {
-                                    for (Army army : map.villages[q][r].activeArmies) {
-                                        //updating marching speed and determining arrivedAtTarget for armies en route
-                                        if (!army.arrivedAtTarget) {
-                                            army.march();
-                                        }
-
-                                        //  determining arrivedAtBase
-                                        if (army.arrivedAtTarget && army.successfulAttack) {
-                                            army.updateMarchingSpeed();
-
-                                            // marching back to base
-                                            if (!army.arrivedAtBase) {
+                            // UPDATING MARCHING ARMIES LOCATION ACCORDING TO SPEED AND TARGET
+                            for (int q = 0; q < map.mapDimension; q++) {
+                                for (int r = 0; r < map.mapDimension; r++) {
+                                    if (map.villages[q][r] != null) {
+                                        for (Army army : map.villages[q][r].activeArmies) {
+                                            //updating marching speed and determining arrivedAtTarget for armies en route
+                                            if (!army.arrivedAtTarget) {
                                                 army.march();
+                                            }
+
+                                            //  determining arrivedAtBase
+                                            if (army.arrivedAtTarget && army.successfulAttack) {
+                                                army.updateMarchingSpeed();
+
+                                                // marching back to base
+                                                if (!army.arrivedAtBase) {
+                                                    army.march();
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
                             }
                         }
                     }
@@ -528,38 +439,6 @@ public class Game {
             }
 
         } while (playerCount != 1); //win condition
-    }
-
-    public double[] getCoordinatesToAttack() {
-        int attackX = 0, attackY = 0;
-        boolean repeat = false;
-        double[] coordinatesAttack = new double[2];
-        Scanner s = new Scanner(System.in);
-        Map m = Map.getInstance();
-
-        do {
-            try {
-                System.out.println("Enter x co-ordinate of village to attack: ");
-                attackX = s.nextInt();
-
-                System.out.println("Enter y co-ordinate of village to attack: ");
-                attackY = s.nextInt();
-
-                if (m.villages[attackX][attackY] != null) {
-                    repeat = false;
-                }
-
-            } catch (InputMismatchException e) {
-                System.out.println("Please enter a valid co-ordinate");
-                s.nextLine();
-                repeat = true;
-
-            }
-        } while (repeat);
-        coordinatesAttack[0] = attackX;
-        coordinatesAttack[1] = attackY;
-
-        return coordinatesAttack;
     }
 
     public int getIndex(int upperBound, boolean zeroIncluded) {
