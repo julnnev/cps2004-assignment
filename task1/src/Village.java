@@ -8,6 +8,7 @@ public class Village {
     ArrayList<TroopGeneratorBuilding> troopBuildings = new ArrayList<>();
     ArrayList<Troop> ownedTroops = new ArrayList<>();
     ArrayList<Troop> awayTroops = new ArrayList<>();
+    ArrayList<Troop> stationedTroops = new ArrayList<>();
     ArrayList<Army> activeArmies = new ArrayList<>();
     Resource resources;
 
@@ -36,10 +37,10 @@ public class Village {
         this.y = y;
     }
 
-    public  ArrayList<Troop> getAvailableTroops(){ // to add as an attribute instead of returning the list??
+    public void updateStationedTroops(){ // to add as an attribute instead of returning the list??
         ArrayList<Troop> availableTroops = new ArrayList<>(this.ownedTroops);
         availableTroops.removeAll(this.awayTroops);
-        return availableTroops;
+        this.stationedTroops = availableTroops;
     }
 
     public int[] getAvailableTroopTypes(ArrayList<Troop> availableTroops){
