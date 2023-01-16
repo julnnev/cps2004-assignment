@@ -198,7 +198,7 @@ public class Game {
                                 switch (choice) {
                                     case 1: // BUILD/UPGRADE BUILDINGS
                                         System.out.println("1. Build Resource Generator Buildings\n2. Build Troop Generating Buildings\n3. Upgrade Resource Generator Buildings\n4. Upgrade Troop Generating Buildings\n");
-                                        int select = getIndex(5, false);
+                                        int select = getOption(5, false);
                                         switch (select) {
                                             case 1: //build resource gen
                                                 System.out.println("Time to build Resource Generator Buildings!");
@@ -241,7 +241,7 @@ public class Game {
                                                         map.villages[i][j].displayResourceBuildings();
                                                         ResourceGeneratorBuilding toUpgrade;
                                                         System.out.println("Time to Upgrade!");
-                                                        selection = getIndex(map.villages[i][j].resourceBuildings.size(), true);
+                                                        selection = getOption(map.villages[i][j].resourceBuildings.size(), true);
                                                         toUpgrade = map.villages[i][j].resourceBuildings.get(selection);
 
                                                         if (toUpgrade.generates.equals("Meat")) {
@@ -291,7 +291,7 @@ public class Game {
                                                         map.villages[i][j].displayTroopBuildings();
                                                         System.out.println("Time to Upgrade!");
                                                         TroopGeneratorBuilding toUpgradeTroop;
-                                                        selection = getIndex(map.villages[i][j].troopBuildings.size(), true);
+                                                        selection = getOption(map.villages[i][j].troopBuildings.size(), true);
                                                         toUpgradeTroop = map.villages[i][j].troopBuildings.get(selection);
                                                         if (toUpgradeTroop.cost.meat != 0) {
                                                             if (map.villages[i][j].resources.meat < 10) {
@@ -342,7 +342,7 @@ public class Game {
                                             break;
                                         }
                                         System.out.println("1. Train Cavalry Troops\n2. Train Archers\n3. Train Ground Troops");
-                                        int option = getIndex(4, false);
+                                        int option = getOption(4, false);
                                         switch (option) { // CHECK FOR BUILDINGS BEFORE !!!
                                             case 1://train cavalry
                                                 for (TroopGeneratorBuilding t : map.villages[i][j].troopBuildings) {
@@ -388,6 +388,7 @@ public class Game {
                                             int groundRequested = input.nextInt();
 
                                             map.villages[i][j].attack(cavalryRequested, archerRequested, groundRequested);
+
                                         } catch (NoTroopsOwnedException t) {
                                             System.out.println(t.getMessage());
                                         }
@@ -441,7 +442,7 @@ public class Game {
         } while (playerCount != 1); //win condition
     }
 
-    public int getIndex(int upperBound, boolean zeroIncluded) {
+    public int getOption(int upperBound, boolean zeroIncluded) {
         Scanner s = new Scanner(System.in);
         boolean repeat = true;
         int choice = 0;
