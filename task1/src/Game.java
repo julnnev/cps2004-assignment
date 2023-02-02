@@ -171,6 +171,20 @@ public class Game {
                                                 // start marching back - set target coordinates
                                                 incoming.target = incoming.base;
 
+
+                                                if (map.villages[i][j].health <= 0) {
+                                                    if (!map.villages[i][j].owner.AI) {
+                                                        System.out.println("Your village has been destroyed!");
+                                                    }
+                                                        playerList.remove(map.villages[i][j].owner);
+                                                        map.destroyVillageFromMap(i, j);
+                                                        if (playerCount != 1) {
+                                                            playerCount--;
+                                                        }
+
+                                                }
+
+
                                             } else {
                                                 if (!map.villages[i][j].owner.AI) {
                                                     System.out.println("The attacking army has failed to successfully attack your village");
@@ -188,12 +202,10 @@ public class Game {
                             }
 
 
-
-
                             if (map.villages[i][j] != null) {
 
                                 // resource earning - wait one round to get resources/upgrades, until buildings are built/upgraded
-                                if(!map.villages[i][j].owner.AI){
+                                if (!map.villages[i][j].owner.AI) {
                                     map.printMap();
                                     System.out.println(map.villages[i][j].resources.toString()); // replaces System.out.println("Current Resources\nWood: " + map.villages[i][j].resources.wood + "\nStone: " + map.villages[i][j].resources.stone + "\nMeat: " + map.villages[i][j].resources.meat);
                                 }
@@ -201,34 +213,33 @@ public class Game {
 
 
                                 // PLAYER ACTIONS
-                                if(!map.villages[i][j].owner.AI) {
+                                if (!map.villages[i][j].owner.AI) {
                                     choice = playerActions();
                                     if (choice == 5) {
                                         continue; // indicates pass the turn
                                     }
-                                }
-                                else{
-                                    choice = getAIChoice(1,5);
+                                } else {
+                                    choice = getAIChoice(1, 5);
                                 }
 
                                 switch (choice) {
                                     case 1: // BUILD/UPGRADE BUILDINGS
                                         int select;
-                                        if(!map.villages[i][j].owner.AI){
+                                        if (!map.villages[i][j].owner.AI) {
                                             System.out.println("1. Build Resource Generator Buildings\n2. Build Troop Generating Buildings\n3. Upgrade Resource Generator Buildings\n4. Upgrade Troop Generating Buildings\n");
-                                             select = getOption(5, false);
-                                        }else{
-                                            select = getAIChoice(1,4);
+                                            select = getOption(5, false);
+                                        } else {
+                                            select = getAIChoice(1, 4);
                                         }
 
                                         switch (select) {
                                             case 1: //build resource gen
                                                 int option;
-                                                if(!map.villages[i][j].owner.AI){
+                                                if (!map.villages[i][j].owner.AI) {
                                                     System.out.println("Time to build Resource Generator Buildings!");
                                                     option = getBuildingType(true);
-                                                }else{
-                                                    option = getAIChoice(1,3);
+                                                } else {
+                                                    option = getAIChoice(1, 3);
                                                 }
                                                 switch (option) {
                                                     case 1: //meat
@@ -247,11 +258,11 @@ public class Game {
                                                 }
                                                 break;
                                             case 2: //build troop gen
-                                                if(!map.villages[i][j].owner.AI) {
+                                                if (!map.villages[i][j].owner.AI) {
                                                     System.out.println("Time to Build Troop Generator Buildings!\n");
                                                     option = getBuildingType(false);
-                                                }else{
-                                                    option = getAIChoice(1,3);
+                                                } else {
+                                                    option = getAIChoice(1, 3);
                                                 }
                                                 switch (option) {
                                                     case 1: //cavalry
@@ -271,12 +282,12 @@ public class Game {
                                                     ResourceGeneratorBuilding toUpgrade;
 
                                                     if (map.villages[i][j].resourceBuildings.size() != 0) {
-                                                        if(!map.villages[i][j].owner.AI){
+                                                        if (!map.villages[i][j].owner.AI) {
                                                             map.villages[i][j].displayResourceBuildings();
                                                             System.out.println("Time to Upgrade!");
                                                             selection = getOption(map.villages[i][j].resourceBuildings.size(), true);
-                                                        }else{
-                                                            selection = getAIChoice(0, map.villages[i][j].resourceBuildings.size()-1);
+                                                        } else {
+                                                            selection = getAIChoice(0, map.villages[i][j].resourceBuildings.size() - 1);
                                                         }
                                                         toUpgrade = map.villages[i][j].resourceBuildings.get(selection);
 
@@ -317,7 +328,7 @@ public class Game {
                                                         throw new NoBuildingsException("No resource generating buildings built!");
                                                     }
                                                 } catch (NoBuildingsException n) {
-                                                    if(!map.villages[i][j].owner.AI) {
+                                                    if (!map.villages[i][j].owner.AI) {
                                                         System.out.println(n.getMessage());
                                                     }
                                                 }
@@ -328,12 +339,12 @@ public class Game {
                                                     TroopGeneratorBuilding toUpgradeTroop;
                                                     if (map.villages[i][j].troopBuildings.size() != 0) {
 
-                                                        if(!map.villages[i][j].owner.AI){ // in person player
+                                                        if (!map.villages[i][j].owner.AI) { // in person player
                                                             map.villages[i][j].displayTroopBuildings();
                                                             System.out.println("Time to Upgrade!");
                                                             selection = getOption(map.villages[i][j].troopBuildings.size(), true);
-                                                        }else{ //AI
-                                                            selection = getAIChoice(0, map.villages[i][j].troopBuildings.size()-1);
+                                                        } else { //AI
+                                                            selection = getAIChoice(0, map.villages[i][j].troopBuildings.size() - 1);
                                                         }
                                                         toUpgradeTroop = map.villages[i][j].troopBuildings.get(selection);
 
@@ -372,7 +383,7 @@ public class Game {
                                                         throw new NoBuildingsException("No troop generating buildings built!");
                                                     }
                                                 } catch (NoBuildingsException n) {
-                                                    if(!map.villages[i][j].owner.AI) {
+                                                    if (!map.villages[i][j].owner.AI) {
                                                         System.out.println(n.getMessage());
                                                     }
                                                 }
@@ -385,17 +396,17 @@ public class Game {
                                         break;
                                     case 2: // TRAIN (I.E. CREATE) TROOPS
                                         if (map.villages[i][j].resourceBuildings.size() == 0) {
-                                            if(!map.villages[i][j].owner.AI){
+                                            if (!map.villages[i][j].owner.AI) {
                                                 System.out.println("No troop buildings available!");
                                             }
                                             break;
                                         }
                                         int option;
-                                        if(!map.villages[i][j].owner.AI){
+                                        if (!map.villages[i][j].owner.AI) {
                                             System.out.println("1. Train Cavalry Troops\n2. Train Archers\n3. Train Ground Troops");
                                             option = getOption(4, false);
-                                        }else{
-                                            option = getAIChoice(1,3);
+                                        } else {
+                                            option = getAIChoice(1, 3);
                                         }
 
                                         switch (option) {
@@ -437,32 +448,32 @@ public class Game {
 
                                             int archerRequested, cavalryRequested, groundRequested;
 
-                                            if(!map.villages[i][j].owner.AI){
+                                            if (!map.villages[i][j].owner.AI) {
                                                 Scanner input = new Scanner(System.in);
                                                 System.out.println("How many Archer Troops would you like to add in this army?");
-                                                 archerRequested = input.nextInt();
+                                                archerRequested = input.nextInt();
                                                 System.out.println("How many Cavalry Troops would you like to add in this army?");
-                                                 cavalryRequested = input.nextInt();
+                                                cavalryRequested = input.nextInt();
                                                 System.out.println("How many Ground Troops would you like to add in this army?");
-                                                 groundRequested = input.nextInt();
-                                            }else{
-                                                archerRequested = getAIChoice(0,3);
-                                                cavalryRequested = getAIChoice(0,3);
-                                                groundRequested = getAIChoice(0,3);
+                                                groundRequested = input.nextInt();
+                                            } else {
+                                                archerRequested = getAIChoice(0, 3);
+                                                cavalryRequested = getAIChoice(0, 3);
+                                                groundRequested = getAIChoice(0, 3);
                                             }
 
 
                                             map.villages[i][j].attack(cavalryRequested, archerRequested, groundRequested);
 
                                         } catch (NoTroopsOwnedException t) {
-                                            if(!map.villages[i][j].owner.AI) {
+                                            if (!map.villages[i][j].owner.AI) {
                                                 System.out.println(t.getMessage());
                                             }
                                         }
 
                                         break;
                                     case 4: // SURRENDER - I.E. village destroyed and player eliminated
-                                        if(!map.villages[i][j].owner.AI){
+                                        if (!map.villages[i][j].owner.AI) {
                                             System.out.println("Player " + map.villages[i][j].owner.name + " you have surrendered!");
                                         }
                                         playerList.remove(map.villages[i][j].owner);
@@ -473,7 +484,7 @@ public class Game {
 
                                         break;
                                     default:
-                                        if(!map.villages[i][j].owner.AI) {
+                                        if (!map.villages[i][j].owner.AI) {
                                             System.out.println("Something went wrong...");
                                         }
                                         break;
