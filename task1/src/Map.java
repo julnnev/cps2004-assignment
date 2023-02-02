@@ -46,7 +46,7 @@ public class Map {
     }
 
     public void printMap(){
-        System.out.println("\t--- VILLAGE MAP ---");
+        System.out.println("\t--- PLAYER VILLAGES MAP ---");
         System.out.print("\t");
         for (int i = 0; i < mapDimension; i++){
 
