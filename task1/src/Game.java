@@ -39,7 +39,7 @@ public class Game {
                         }
 
                         if (map.villages[i][j].owner.AI) {
-                            continue; // ... tbc ...
+                            System.out.println("An AI Player is taking its turn.");
                         }
 
                         // FRIENDLY TROOP ARRIVAL
@@ -191,9 +191,10 @@ public class Game {
 
 
                             if (map.villages[i][j] != null) {
-                                map.printMap();
+
                                 // resource earning - wait one round to get resources/upgrades, until buildings are built/upgraded
                                 if(!map.villages[i][j].owner.AI){
+                                    map.printMap();
                                     System.out.println(map.villages[i][j].resources.toString()); // replaces System.out.println("Current Resources\nWood: " + map.villages[i][j].resources.wood + "\nStone: " + map.villages[i][j].resources.stone + "\nMeat: " + map.villages[i][j].resources.meat);
                                 }
                                 map.villages[i][j].updateResources();
