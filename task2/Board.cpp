@@ -6,32 +6,30 @@ Board::Board() {
 
 void Board::initBoard() {
     // Continue until all random mines have been created.
-    for (int i = 0; i < 16; i++) {
-        for (int j = 0; j < 16; j++) {
+    for (int i = 0; i < GRID_ROWS; i++) {
+        for (int j = 0; j < GRID_COLUMNS; j++) {
             gameBoard[i][j] = '-';
         }
     }
 
     // seeding at a random position
-    srand(time(NULL));
+    srand(time(nullptr));
 
     for (int i = 0; i < TOTAL_MINES;) {
         int random = rand() % (GRID_ROWS * GRID_COLUMNS);
         int x = random / GRID_ROWS;
         int y = random % GRID_COLUMNS;
-        bool mark[GRID_ROWS * GRID_COLUMNS];
-        memset(mark, false, sizeof(mark));
+        bool mineMarks[GRID_ROWS * GRID_COLUMNS];
+        memset(mineMarks, false, sizeof(mineMarks));
 
-        // Add the mine if no mine is placed at this position
-        if (!mark[random]) {
-            // mine row index
+        // If no mine is present, add mine
+        if (!mineMarks[random]) {
             mineLocations[i][0] = x;
-            // column row index
             mineLocations[i][1] = y;
 
             // allocate mine in game board
             gameBoard[mineLocations[i][0]][mineLocations[i][1]] = 'X';
-            mark[random] = true;
+            mineMarks[random] = true;
             i++;
         }
     }
@@ -175,16 +173,16 @@ int Board::mineCount(int i, int j) {
     }
 
     /*
-    Cell-->Current Cell (row, col)
-    N -->  North        (row-1, col)
-    S -->  South        (row+1, col)
-    E -->  East         (row, col+1)
-    W -->  West         (row, col-1)
+    Cell: Current Cell (row, col)
+    N: North        (row-1, col)
+    S: South        (row+1, col)
+    E: East         (row, col+1)
+    W: West         (row, col-1)
 
-    N.E--> North-East   (row-1, col+1)
-    N.W--> North-West   (row-1, col-1)
-    S.E--> South-East   (row+1, col+1)
-    S.W--> South-West   (row+1, col-1)
+    NE: North-East   (row-1, col+1)
+    NW: North-West   (row-1, col-1)
+    SE: South-East   (row+1, col+1)
+    SW: South-West   (row+1, col-1)
      */
 
     return count;
