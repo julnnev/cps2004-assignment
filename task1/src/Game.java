@@ -446,24 +446,36 @@ public class Game {
                                                 throw new NoTroopsOwnedException("No troops available!\n");
                                             }
 
-                                            int archerRequested, cavalryRequested, groundRequested;
+                                            int archerRequested=0, cavalryRequested=0, groundRequested=0;
+                                            boolean loop=false;
 
                                             if (!map.villages[i][j].owner.AI) {
                                                 Scanner input = new Scanner(System.in);
-                                                System.out.println("How many Archer Troops would you like to add in this army?");
-                                                archerRequested = input.nextInt();
-                                                System.out.println("How many Cavalry Troops would you like to add in this army?");
-                                                cavalryRequested = input.nextInt();
-                                                System.out.println("How many Ground Troops would you like to add in this army?");
-                                                groundRequested = input.nextInt();
+                                                do {
+                                                    try {
+                                                        System.out.println("How many Archer Troops would you like to add in this army?");
+                                                        archerRequested = input.nextInt();
+                                                        System.out.println("How many Cavalry Troops would you like to add in this army?");
+                                                        cavalryRequested = input.nextInt();
+                                                        System.out.println("How many Ground Troops would you like to add in this army?");
+                                                        groundRequested = input.nextInt();
+                                                    } catch (InputMismatchException e) {
+                                                        System.out.println("Try again!");
+                                                        input.nextLine();
+                                                        loop = true;
+                                                    }
+                                                }while(loop);
                                             } else {
                                                 archerRequested = getAIChoice(0, 3);
                                                 cavalryRequested = getAIChoice(0, 3);
                                                 groundRequested = getAIChoice(0, 3);
                                             }
 
-
-                                            map.villages[i][j].attack(cavalryRequested, archerRequested, groundRequested);
+                                            if (!map.villages[i][j].owner.AI) {
+                                                map.villages[i][j].attack(cavalryRequested, archerRequested, groundRequested, false);
+                                            }else{
+                                                map.villages[i][j].attack(cavalryRequested, archerRequested, groundRequested, true);
+                                            }
 
                                         } catch (NoTroopsOwnedException t) {
                                             if (!map.villages[i][j].owner.AI) {
@@ -698,7 +710,7 @@ public class Game {
         return players;
     }
 
-    public int getAIChoice(int min, int max) {
+    public static int getAIChoice(int min, int max) {
         return (int) ((Math.random() * (max + 1 - min)) + min);
     }
 }
