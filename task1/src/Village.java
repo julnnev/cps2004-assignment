@@ -184,7 +184,7 @@ public class Village {
         }
     }
 
-    public void attack(int cavalryRequested, int archerRequested, int groundRequested) throws NoTroopsOwnedException {
+    public void attack(int cavalryRequested, int archerRequested, int groundRequested, boolean AI) throws NoTroopsOwnedException {
         // check if enough troops of each type are available
         this.updateStationedTroops();
         int[] availableTroopTypes = this.getAvailableTroopTypes(this.stationedTroops);
@@ -219,7 +219,16 @@ public class Village {
 
         }
         // enter village co-ordinates to attack - check if they are valid
-        double[] coordinates = getCoordinatesToAttack();
+        double[] coordinates = new double[2];
+        Map m = Map.getInstance();
+        if(!AI){
+            coordinates = getCoordinatesToAttack();
+        }else{
+            do {
+                coordinates[0] = Game.getAIChoice(0,9); // generate random int from 0-9
+                coordinates[1] = Game.getAIChoice(0,9);
+            }while(m.villages[(int) coordinates[0]][(int) coordinates[1]]!=null);
+        }
         double[] currentLocation = {this.getX(), this.getY()};
         // create Army
         Army army = new Army(selectedTroops, currentLocation, coordinates);
@@ -230,7 +239,7 @@ public class Village {
 
     public double[] getCoordinatesToAttack() {
         int attackX = 0, attackY = 0;
-        boolean repeat = false;
+        boolean repeat;
         double[] coordinatesAttack = new double[2];
         Scanner s = new Scanner(System.in);
         Map m = Map.getInstance();
