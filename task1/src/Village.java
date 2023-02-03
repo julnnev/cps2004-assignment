@@ -243,8 +243,16 @@ public class Village {
                 System.out.println("Enter y co-ordinate of village to attack: ");
                 attackY = s.nextInt();
 
+                if(attackX>= m.mapDimension || attackX<0 || attackY>= m.mapDimension || attackY<0){
+                    System.out.println("Please enter co-ordinates within the range 0-9!");
+                }
+
+
                 if (m.villages[attackX][attackY] != null) {
                     repeat = false;
+                }else{
+                    System.out.println("The village you have selected does not exist!");
+                    repeat=true;
                 }
 
             } catch (InputMismatchException e) {
